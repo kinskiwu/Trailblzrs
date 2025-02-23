@@ -1,0 +1,50 @@
+# Node.js dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+build/
+out/
+
+# Environment variables
+.env
+
+# Vite cache
+.vite/
+apps/client/.vite/
+
+# Cache files
+.cache/
+client/.cache/
+server/.cache/
+
+# ESLint & Prettier cache
+.eslintcache
+.prettierignore
+
+# Jest & Testing
+coverage/
+server/coverage/
+client/coverage/
+
+# MongoDB
+data/db/
+dump/
+
+# GitHub Actions cache
+.github/workflows/node_modules/
+
+# macOS & Windows system files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
