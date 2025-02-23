@@ -1,37 +1,45 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
+import { getEnv } from '../config/dotenvConfig.js';
 
-dotenv.config();
+getEnv();
 
-const NPS_API_URL = 'https://developer.nps.gov/api/v1/parks';
+const BASE_URL = 'https://developer.nps.gov/api/v1/parks';
+const API_KEY = process.env.NPS_API_KEY;
 
 export class ParksService {
-  constructor(apiClient = axios, apiKey = process.env.NPS_API_KEY) {
+  constructor(apiClient = axios, apiKey = API_KEY) {
     this.apiClient = apiClient;
     this.apiKey = apiKey;
+
+    if (!this.apiKey) {
+      throw new Error('NPS API key is not configured');
+    }
   }
 
-  async fetchParks(limit = 5) {
+  async fetchParks() {
     try {
-      const { data } = await this.apiClient.get(NPS_API_URL, {
-        params: { limit, api_key: this.apiKey },
-      });
+      const url = `${BASE_URL}?limit=5&api_key=${this.apiKey}`;
+      const { data } = await this.apiClient.get(url);
 
-      return data.data.slice(0, limit).map((park, index) => ({
+      if (!data || !Array.isArray(data.data)) {
+        throw new Error('Invalid response format from NPS API');
+      }
+
+      return data.data.map((park, index) => ({
         order: index + 1,
         name: park.fullName,
         state: park.states,
         npsLink: park.url,
-        entranceFee: park.entranceFees.length
-          ? `$${park.entranceFees[0].cost}`
-          : 'Free',
-        location: `${park.addresses[0]?.city}, ${park.addresses[0]?.stateCode}`,
-        activities: park.activities.map((a) => a.name).join(', '),
-        historicalRelevance: park.topics.map((t) => t.name).join(', '),
+        location: park.addresses,
+        activities: park.activities,
+        historicalRelevance: park.topics,
         directions: park.directionsUrl,
+        parkCode: park.parkCode,
+        description: park.description,
       }));
     } catch (err) {
-      console.error('Failed to fetch parks');
+      console.error('Failed to fetch parks:', err.message);
+      throw new Error(`Failed to fetch parks: ${err.message}`);
     }
   }
 }

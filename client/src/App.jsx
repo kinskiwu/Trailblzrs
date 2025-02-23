@@ -18,7 +18,7 @@ function App() {
     fetchData();
   }, []);
 
-  return <h1>{data || "Loading..."}</h1>;;
+  return <h1>{data || 'Loading...'}</h1>;
 }
 
 export default App;

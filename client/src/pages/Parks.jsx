@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Parks = () => {
-  return (
-    <div>Parks</div>
-  )
-}
+  return <div>Parks</div>;
+};
 
-export default Parks
+export default Parks;
