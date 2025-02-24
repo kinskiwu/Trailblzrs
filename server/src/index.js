@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import parksRouter from './routes/parksRouter.js';
 import forecastRouter from './routes/forecastRouter.js';
+import tripsRouter from './routes/tripsRouter.js';
 import { connectDB } from './config/dbConfig.js';
 
 const app = express();
@@ -18,6 +19,8 @@ app.get('/api/test', (_, res) => {
 app.use('/api/parks', parksRouter);
 
 app.use('/api/forecast', forecastRouter);
+
+app.use('/api/trips', tripsRouter);
 
 app
   .listen(PORT, () => {
