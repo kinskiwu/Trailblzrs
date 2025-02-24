@@ -6,7 +6,8 @@ const parksRouter = Router();
 const parksService = new ParksService();
 const parksController = new ParksController(parksService);
 
-parksRouter.get('/', parksController.getParks, (_, res) => {
+// GET /api/parks?page=1
+parksRouter.get('/', parksController.getParks, (req, res) => {
   if (res.locals.error) {
     return res.status(res.locals.error.status).json({
       success: false,
@@ -17,7 +18,10 @@ parksRouter.get('/', parksController.getParks, (_, res) => {
 
   return res.status(200).json({
     success: true,
-    data: res.locals.parks,
+    data: {
+      parks: res.locals.parks,
+      pagination: res.locals.pagination
+    }
   });
 });
 
