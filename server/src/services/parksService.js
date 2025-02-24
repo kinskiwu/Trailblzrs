@@ -25,16 +25,23 @@ export class ParksService {
         .skip(start)
         .limit(PARKS_PER_PAGE);
 
-      // If not enough parks in database, get more from NPS
+      // If not enough parks in database, fetch missing ones
       if (parks.length < PARKS_PER_PAGE) {
-        const newParks = await this.fetchParksFromNPSApi(start);
-        if (newParks.length > 0) {
-          await Park.insertMany(newParks);
-          parks = await Park.find()
-            .sort({ order: 1 })
-            .skip(start)
-            .limit(PARKS_PER_PAGE);
+        // Get all parks up to current page
+        for (let currentStart = 0; currentStart <= start; currentStart += PARKS_PER_PAGE) {
+          const newParks = await this.fetchParksFromNPSApi(currentStart);
+          if (newParks.length > 0) {
+            await Park.insertMany(newParks);
+          } else {
+            break; // No more parks available from API
+          }
         }
+
+        // Get the requested page from DB after fetching all missing parks
+        parks = await Park.find()
+          .sort({ order: 1 })
+          .skip(start)
+          .limit(PARKS_PER_PAGE);
       }
 
       return {
