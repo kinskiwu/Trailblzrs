@@ -6,22 +6,19 @@ const weatherRouter = Router();
 const weatherService = new WeatherService();
 const weatherController = new WeatherController(weatherService);
 
-weatherRouter.get('/',
-  weatherController.getWeather,
-  (_, res) => {
-    if (res.locals.error) {
-      return res.status(res.locals.error.status).json({
-        success: false,
-        message: res.locals.error.message,
-        details: res.locals.error.details
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      data: res.locals.weather
+weatherRouter.get('/', weatherController.getWeather, (_, res) => {
+  if (res.locals.error) {
+    return res.status(res.locals.error.status).json({
+      success: false,
+      message: res.locals.error.message,
+      details: res.locals.error.details,
     });
   }
-);
+
+  return res.status(200).json({
+    success: true,
+    data: res.locals.weather,
+  });
+});
 
 export default weatherRouter;

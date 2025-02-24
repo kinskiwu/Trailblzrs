@@ -17,26 +17,32 @@ export class WeatherController {
       // Fetch park details from the database
       const park = await Park.findOne({ parkId });
 
-      if (!park || !park.geolocation?.latitude || !park.geolocation?.longitude) {
+      if (
+        !park ||
+        !park.geolocation?.latitude ||
+        !park.geolocation?.longitude
+      ) {
         throw new Error('Park not found or missing geolocation data');
       }
 
-      console.log(`Fetching weather for park: ${park.name} (${park.geolocation.latitude}, ${park.geolocation.longitude})`);
-
       // Fetch weather using geolocation
-      const forecast = await this.weatherService.getWeatherByCoordinates(park.geolocation.latitude, park.geolocation.longitude, startDate);
+      const forecast = await this.weatherService.getWeatherByCoordinates(
+        park.geolocation.latitude,
+        park.geolocation.longitude,
+        startDate,
+      );
 
       res.locals.weather = {
         parkId: park.parkId,
         parkName: park.name,
-        forecast
+        forecast,
       };
       next();
     } catch (err) {
       res.locals.error = {
         status: err.message.includes('required') ? 400 : 404,
         message: err.message,
-        details: err.response?.data || err.message
+        details: err.response?.data || err.message,
       };
       next(err);
     }

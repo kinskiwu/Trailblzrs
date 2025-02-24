@@ -1,53 +1,56 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const parkSchema = new Schema({
-  parkId: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true
-  },
-  order: {
-    type: Number,
-    required: true
-  },
-  name: {
-    type: String,
-    trim: true
-  },
-  city: {
-    type: String,
-    trim: true
-  },
-  state: {
-    type: String,
-    trim: true,
-    uppercase: true
-  },
-  description: {
-    type: String,
-    trim: true
-  },
-  activities: {
-    type: [String],
-    default: []
-  },
-  historicalTopics: {
-    type: [String],
-    default: []
-  },
-  geolocation: {
-    latitude: {
-      type: Number
+const parkSchema = new Schema(
+  {
+    parkId: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
     },
-    longitude: {
-      type: Number
-    }
-  }
-}, {
-  timestamps: true
-});
+    order: {
+      type: Number,
+      required: true,
+    },
+    name: {
+      type: String,
+      trim: true,
+    },
+    city: {
+      type: String,
+      trim: true,
+    },
+    state: {
+      type: String,
+      trim: true,
+      uppercase: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    activities: {
+      type: [String],
+      default: [],
+    },
+    historicalTopics: {
+      type: [String],
+      default: [],
+    },
+    geolocation: {
+      latitude: {
+        type: Number,
+      },
+      longitude: {
+        type: Number,
+      },
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 // TTL for 7 days
 parkSchema.index({ createdAt: 1 }, { expireAfterSeconds: 7 * 24 * 60 * 60 });
