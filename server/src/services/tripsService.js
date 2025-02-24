@@ -22,4 +22,13 @@ export class TripsService {
       throw new Error('Failed to create trip');
     }
   }
+
+  async getTripById(tripId) {
+    try {
+      return await this.tripModel.findOne({ tripId }, 'tripId tripDetails');
+    } catch (err) {
+      console.error('Failed to fetch trip:', err);
+      throw new Error('Failed to fetch trip');
+    }
+  }
 }
