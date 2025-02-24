@@ -16,7 +16,7 @@ export class ParksController {
       res.locals.error = {
         status: 500,
         message: 'Failed to fetch parks',
-        details: err.message
+        details: err.message,
       };
       next(err);
     }

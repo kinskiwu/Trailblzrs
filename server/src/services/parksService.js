@@ -28,7 +28,11 @@ export class ParksService {
       // If not enough parks in database, fetch missing ones
       if (parks.length < PARKS_PER_PAGE) {
         // Get all parks up to current page
-        for (let currentStart = 0; currentStart <= start; currentStart += PARKS_PER_PAGE) {
+        for (
+          let currentStart = 0;
+          currentStart <= start;
+          currentStart += PARKS_PER_PAGE
+        ) {
           const newParks = await this.fetchParksFromNPSApi(currentStart);
           if (newParks.length > 0) {
             await Park.insertMany(newParks);
@@ -48,8 +52,8 @@ export class ParksService {
         parks,
         pagination: {
           currentPage: page,
-          hasMore: parks.length === PARKS_PER_PAGE
-        }
+          hasMore: parks.length === PARKS_PER_PAGE,
+        },
       };
     } catch (error) {
       console.error('Failed to get parks:', error);
@@ -64,23 +68,24 @@ export class ParksService {
         params: {
           start,
           limit: PARKS_PER_PAGE,
-          api_key: this.apiKey
-        }
+          api_key: this.apiKey,
+        },
       });
 
       // Transform NPS data to match our DB schema
       return data.data.map((park, index) => ({
+        parkId: park.id,
         order: start + index,
         name: park.fullName,
         city: park.addresses[0]?.city || 'Unknown City',
         state: park.addresses[0]?.stateCode || 'Unknown State',
         description: park.description,
-        activities: park.activities.map(a => a.name).slice(0, 5),
-        historicalRelevance: park.topics.map(t => t.name).slice(0, 5),
+        activities: park.activities.map((a) => a.name).slice(0, 5),
+        historicalRelevance: park.topics.map((t) => t.name).slice(0, 5),
         geolocation: {
           latitude: parseFloat(park.latitude),
-          longitude: parseFloat(park.longitude)
-        }
+          longitude: parseFloat(park.longitude),
+        },
       }));
     } catch (error) {
       console.error('Failed to fetch from NPS API:', error);
