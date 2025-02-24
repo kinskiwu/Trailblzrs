@@ -15,14 +15,10 @@ tripsRouter.post('/', tripsController.createTrip, (_, res) => {
       details: res.locals.error.details,
     });
   }
-
-  return res.status(201).json({
-    success: true,
-    data: res.locals.trip,
-  });
+  return res.status(201).json({ success: true, data: res.locals.trip });
 });
 
-// GET /api/trips/:tripId)
+// GET /api/trips/:tripId
 tripsRouter.get('/:tripId', tripsController.getTripById, (_, res) => {
   if (res.locals.error) {
     return res.status(res.locals.error.status).json({
@@ -31,11 +27,19 @@ tripsRouter.get('/:tripId', tripsController.getTripById, (_, res) => {
       details: res.locals.error.details,
     });
   }
+  return res.status(200).json({ success: true, data: res.locals.trip });
+});
 
-  return res.status(200).json({
-    success: true,
-    data: res.locals.trip,
-  });
+// PUT /api/trips/:tripId
+tripsRouter.put('/:tripId', tripsController.updateTrip, (_, res) => {
+  if (res.locals.error) {
+    return res.status(res.locals.error.status).json({
+      success: false,
+      message: res.locals.error.message,
+      details: res.locals.error.details,
+    });
+  }
+  return res.status(200).json({ success: true, data: res.locals.trip });
 });
 
 export default tripsRouter;
