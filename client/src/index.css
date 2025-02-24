@@ -232,3 +232,39 @@ body {
   font-size: 10px;
   color: #5a7d5b;
 }
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 5px;
+}
+
+.page-button {
+  min-width: 32px;
+  height: 32px;
+  border: 1px solid #a0c4a8;
+  background-color: #ffffff;
+  color: #2e4d38;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+
+.page-button:hover {
+  background-color: #e0efe2;
+}
+
+.page-button.active {
+  background-color: #4a7c59;
+  color: white;
+  border-color: #4a7c59;
+}
+
+.page-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
