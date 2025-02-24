@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const parkSchema = new Schema({
+  parkId: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
   order: {
     type: Number,
     required: true
@@ -33,10 +39,10 @@ const parkSchema = new Schema({
   },
   geolocation: {
     latitude: {
-      type: String
+      type: Number
     },
     longitude: {
-      type: String
+      type: Number
     }
   }
 }, {

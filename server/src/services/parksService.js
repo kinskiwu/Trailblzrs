@@ -70,6 +70,7 @@ export class ParksService {
 
       // Transform NPS data to match our DB schema
       return data.data.map((park, index) => ({
+        parkId: park.id,
         order: start + index,
         name: park.fullName,
         city: park.addresses[0]?.city || 'Unknown City',
