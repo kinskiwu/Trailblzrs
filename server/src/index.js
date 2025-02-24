@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import parksRouter from './routes/parksRouter.js';
+import { connectDB } from './config/dbConfig.js';
 
 const app = express();
+const PORT = process.env.PORT || 5001;
+connectDB();
 
 app.use(cors());
 app.use(express.json());
@@ -12,8 +15,6 @@ app.get('/api/test', (_, res) => {
 });
 
 app.use('/api/parks', parksRouter);
-
-const PORT = process.env.PORT || 5001;
 
 app
   .listen(PORT, () => {
