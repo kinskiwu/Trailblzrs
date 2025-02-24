@@ -1,24 +1,20 @@
 import './App.css';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import Header from './components/Header';
+import ParksList from './components/ParksList';
 
 function App() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/api/test');
-        setData(response.data.message);
-      } catch (err) {
-        console.error(`Error fetching data: ${err.message}`);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return <h1>{data || 'Loading...'}</h1>;
+  return (
+    <div className='app'>
+      <Header />
+      <main className='main-content'>
+        <h2 className='page-title'>
+          <span className='icon'>🥾</span> Explore Parks
+        </h2>
+        <ParksList />
+      </main>
+    </div>
+  );
 }
 
 export default App;
