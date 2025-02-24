@@ -5,12 +5,13 @@ export class ParksController {
   }
   async getParks(req, res, next) {
     try {
-      // Get page from query params, default to 1
+      // Get page and limit from query params, default to 1 and 6
       const page = parseInt(req.query.page) || 1;
-      const result = await this.parksService.getParks(page);
+      const limit = parseInt(req.query.limit) || 6;
+
+      const result = await this.parksService.getParks(page, limit);
 
       res.locals.parks = result.parks;
-      res.locals.pagination = result.pagination;
       next();
     } catch (err) {
       res.locals.error = {
