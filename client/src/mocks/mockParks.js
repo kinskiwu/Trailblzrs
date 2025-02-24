@@ -89,4 +89,85 @@ export const mockParks = [
       longitude: -117.134395,
     },
   },
+  {
+    parkId: 'E3A8F4D2-6F23-4FAD-B2C5-9F8FDF8B4F64',
+    image:
+      'https://www.nps.gov/common/uploads/structured_data/3C7FAF3C-1DD8-B71B-0B1E80A2CE25E86B.jpg',
+    name: 'Yellowstone National Park',
+    city: 'Yellowstone',
+    state: 'WY',
+    description:
+      'The first national park in the world, Yellowstone is home to geysers, hot springs, and diverse wildlife. It spans three states and offers stunning landscapes, making it a premier destination for nature lovers and outdoor enthusiasts.',
+    activities: [
+      'Hiking',
+      'Wildlife Viewing',
+      'Camping',
+      'Photography',
+      'Fishing',
+    ],
+    historicalRelevance: [
+      'Conservation',
+      'Native American Heritage',
+      'Geology',
+      'Wildlife Protection',
+    ],
+    npsLink: 'https://www.nps.gov/yell',
+    directions: 'http://www.nps.gov/yell/planyourvisit/directions.htm',
+    geolocation: {
+      latitude: 44.428,
+      longitude: -110.5885,
+    },
+  },
+  {
+    parkId: '9D3AFC87-B70F-4182-82D8-5AE6A9E9C7D5',
+    image:
+      'https://www.nps.gov/common/uploads/structured_data/3C3C35E6-1DD8-B71B-0B843293D5975F5B.jpg',
+    name: 'Grand Canyon National Park',
+    city: 'Grand Canyon',
+    state: 'AZ',
+    description:
+      'Carved by the Colorado River, the Grand Canyon is one of the most famous natural wonders in the world. With breathtaking views, hiking trails, and river rafting opportunities, it draws millions of visitors each year.',
+    activities: ['Hiking', 'Rafting', 'Camping', 'Scenic Drives', 'Mule Rides'],
+    historicalRelevance: [
+      'Geology',
+      'Native American Heritage',
+      'Exploration',
+      'Conservation',
+    ],
+    npsLink: 'https://www.nps.gov/grca',
+    directions: 'http://www.nps.gov/grca/planyourvisit/directions.htm',
+    geolocation: {
+      latitude: 36.1069,
+      longitude: -112.1129,
+    },
+  },
+  {
+    parkId: '6E7D3DF4-4A5E-4D1F-925F-1F91C50B3D6E',
+    image:
+      'https://www.nps.gov/common/uploads/structured_data/3C8511D2-1DD8-B71B-0B3D11B7A7EBAFA4.jpg',
+    name: 'Acadia National Park',
+    city: 'Bar Harbor',
+    state: 'ME',
+    description:
+      'Acadia National Park is a gem on the East Coast, offering rocky coastlines, forested mountains, and stunning ocean views. It provides year-round recreational activities, including hiking, biking, and wildlife watching.',
+    activities: [
+      'Hiking',
+      'Biking',
+      'Bird Watching',
+      'Camping',
+      'Scenic Drives',
+    ],
+    historicalRelevance: [
+      'Conservation',
+      'Maritime Heritage',
+      'Native American Heritage',
+      'Geology',
+    ],
+    npsLink: 'https://www.nps.gov/acad',
+    directions: 'http://www.nps.gov/acad/planyourvisit/directions.htm',
+    geolocation: {
+      latitude: 44.3386,
+      longitude: -68.2733,
+    },
+  },
 ];
