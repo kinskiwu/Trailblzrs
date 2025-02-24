@@ -13,6 +13,7 @@ const parkSchema = new Schema(
       type: Number,
       required: true,
     },
+    image: { type: String },
     name: {
       type: String,
       trim: true,
@@ -38,6 +39,8 @@ const parkSchema = new Schema(
       type: [String],
       default: [],
     },
+    npsLink: { type: String },
+    directions: { type: String, trim: true },
     geolocation: {
       latitude: {
         type: Number,
