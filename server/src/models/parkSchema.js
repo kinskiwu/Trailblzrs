@@ -9,10 +9,6 @@ const parkSchema = new Schema(
       unique: true,
       index: true,
     },
-    order: {
-      type: Number,
-      required: true,
-    },
     image: { type: String },
     name: {
       type: String,
@@ -35,7 +31,7 @@ const parkSchema = new Schema(
       type: [String],
       default: [],
     },
-    historicalTopics: {
+    historicalRelevance: {
       type: [String],
       default: [],
     },

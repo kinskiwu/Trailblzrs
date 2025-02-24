@@ -20,7 +20,6 @@ parksRouter.get('/', parksController.getParks, (_, res) => {
     success: true,
     data: {
       parks: res.locals.parks,
-      pagination: res.locals.pagination,
     },
   });
 });
