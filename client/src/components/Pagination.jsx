@@ -4,10 +4,12 @@ import { useParks } from '../contexts/ParksContext';
 const Pagination = () => {
   const { currentPage, fetchParks } = useParks();
 
+  // Moves to next page & fetching new parks
   const handleNextPage = () => {
     fetchParks(currentPage + 1);
   };
 
+  //  Moves to previous page & fetching new parks
   const handlePrevPage = () => {
     if (currentPage > 1) {
       fetchParks(currentPage - 1);
@@ -19,7 +21,7 @@ const Pagination = () => {
       <button
         className='page-button'
         onClick={handlePrevPage}
-        disabled={currentPage === 1}
+        disabled={currentPage === 1} // disabled if already on first page
       >
         &lt;
       </button>
