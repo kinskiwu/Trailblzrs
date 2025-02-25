@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Trailblzrs API enables users to discover national parks, view weather forecasts, and create 7-day itineraries.
+The Trailblzrs API enables users to discover national parks and view weather forecasts.
 
 ## Endpoints
 
@@ -198,7 +198,7 @@ Update a trip by adding or changing a park assignment.
     },
     // ...
   ]
-  expiresAt: Date           // TTL expiration date (7 days)
+  timestamp: String
 }
 ```
 
