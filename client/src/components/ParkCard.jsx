@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { mockParks } from '../mocks/mockParks';
 
-const ParkCard = ({ parkId: providedParkId }) => {
-  const [parks, setParks] = useState(mockParks);
+const ParkCard = ({ park }) => {
   const [isDescExpanded, setIsDescExpanded] = useState(false);
 
-  // Get the first park from mock data if no specific parkId provided
-  const park = providedParkId
-    ? parks.find((p) => p.parkId === providedParkId)
-    : parks[0];
-
   // Helper func to render info rows
-  const renderInfoRow = (label, content) => (
-    <div className='info-row'>
-      <div className='info-label'>{label}:</div>
-      <div className='info-content'>{content || 'N/A'}</div>
-    </div>
-  );
+  const renderInfoRow = (label, content) => {
+    return (
+      <div className='info-row'>
+        <div className='info-label'>{label}:</div>
+        <div className='info-content'>{content || 'N/A'}</div>
+      </div>
+    );
+  };
 
   return (
     <div className='park-card'>
@@ -27,7 +22,6 @@ const ParkCard = ({ parkId: providedParkId }) => {
           className='actual-image'
         />
       </div>
-
       <div className='park-info'>
         <h3 className='park-title'>{park.name}</h3>
         <p
@@ -37,13 +31,22 @@ const ParkCard = ({ parkId: providedParkId }) => {
         >
           {park.description}
         </p>
-        {renderInfoRow('Location', `${park.city}, ${park.state}`)}
-        {renderInfoRow('Activities', park.activities?.join(', '))}
+        {renderInfoRow(
+          'Location',
+          [park.city, park.state].filter(Boolean).join(', '),
+        )}
+        {renderInfoRow(
+          'Activities',
+          park.activities?.length ? park.activities.join(', ') : null,
+        )}
         {renderInfoRow(
           'Historical Relevance',
-          park.historicalRelevance?.join(', '),
+          park.historicalRelevance?.length
+            ? park.historicalRelevance.join(', ')
+            : null,
         )}
-        {renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
+        {park.npsLink &&
+          renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
         <button className='card-button'>
           <span className='itinerary-icon'>✓</span> Add to itinerary
         </button>
