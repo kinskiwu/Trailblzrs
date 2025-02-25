@@ -31,36 +31,4 @@ export class TripsService {
       throw new Error('Failed to fetch trip');
     }
   }
-
-  async updateTrip(tripId, parkId, newDate) {
-    try {
-      const trip = await this.tripModel.findOne({ tripId });
-      if (!trip) {
-        return null;
-      }
-
-      // Remove the park from any existing date in tripDetails
-      trip.tripDetails.forEach((day) => {
-        day.parks = day.parks.filter((id) => id !== parkId);
-      });
-
-      // Check if the date already exists
-      let targetDay = trip.tripDetails.find((day) => day.date === newDate);
-
-      if (targetDay) {
-        // If date exists, add park
-        if (!targetDay.parks.includes(parkId)) {
-          targetDay.parks.push(parkId);
-        }
-      } else {
-        // Else create a new entry
-        trip.tripDetails.push({ date: newDate, parks: [parkId] });
-      }
-
-      await trip.save();
-      return { tripId: trip.tripId, tripDetails: trip.tripDetails };
-    } catch (err) {
-      throw new Error('Failed to update trip');
-    }
-  }
 }
