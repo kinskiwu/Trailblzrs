@@ -34,15 +34,11 @@ export class ForecastService {
 
       return {
         parkId: park.parkId,
-        parkName: park.name,
-        state: park.state,
         visitDate,
         high: forecast.high,
         low: forecast.low,
         weather: forecast.weather,
         windSpeed: forecast.windSpeed,
-        npsLink: `https://www.nps.gov/${park.parkId}/index.htm`,
-        directions: park.directions || 'No directions available.',
       };
     } catch (err) {
       console.error('Error fetching park or forecast data:', err.message);
