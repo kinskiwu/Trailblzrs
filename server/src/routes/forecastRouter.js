@@ -6,7 +6,7 @@ const forecastRouter = Router();
 const forecastService = new ForecastService();
 const forecastController = new ForecastController(forecastService);
 
-// GET /api/weather?parkId=77E0-ED&visitDate=2025-02-25
+// GET /api/weather?parkId=
 forecastRouter.get('/', forecastController.getForecast, (_, res) => {
   if (res.locals.error) {
     return res.status(res.locals.error.status).json({
