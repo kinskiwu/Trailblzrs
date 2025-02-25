@@ -51,7 +51,4 @@ const parkSchema = new Schema(
   },
 );
 
-// TTL for 7 days
-parkSchema.index({ createdAt: 1 }, { expireAfterSeconds: 7 * 24 * 60 * 60 });
-
 export const Park = mongoose.model('Park', parkSchema);
