@@ -18,7 +18,7 @@ const Trips = () => {
           Trip Dates: {startDate.toString()} - {endDate.toString()}
         </span>
       </div>
-      <Accordion />;
+      <Accordion />
       <ExportButton />
     </div>
   );
