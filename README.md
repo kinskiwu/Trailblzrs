@@ -134,7 +134,7 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 ## Additional Documentation
 
 - **Wireframes**: [Click here](https://balsamiq.cloud/slveto6/plezzeg/r2278)
-- **API Design**: [Click here]('/docs/trailblzers-api-design.md')
+- **API Design**: [Click here](docs/Trailblzers-Api-Design.md)
 
 ## Stretch Features
 
