@@ -4,12 +4,14 @@ const ParkCard = ({ park }) => {
   const [isDescExpanded, setIsDescExpanded] = useState(false);
 
   // Helper func to render info rows
-  const renderInfoRow = (label, content) => (
-    <div className='info-row'>
-      <div className='info-label'>{label}:</div>
-      <div className='info-content'>{content || 'N/A'}</div>
-    </div>
-  );
+  const renderInfoRow = (label, content) => {
+    return (
+      <div className='info-row'>
+        <div className='info-label'>{label}:</div>
+        <div className='info-content'>{content || 'N/A'}</div>
+      </div>
+    );
+  };
 
   return (
     <div className='park-card'>
@@ -29,6 +31,22 @@ const ParkCard = ({ park }) => {
         >
           {park.description}
         </p>
+        {renderInfoRow(
+          'Location',
+          [park.city, park.state].filter(Boolean).join(', '),
+        )}
+        {renderInfoRow(
+          'Activities',
+          park.activities?.length ? park.activities.join(', ') : null,
+        )}
+        {renderInfoRow(
+          'Historical Relevance',
+          park.historicalRelevance?.length
+            ? park.historicalRelevance.join(', ')
+            : null,
+        )}
+        {park.npsLink &&
+          renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
         <button className='card-button'>
           <span className='itinerary-icon'>✓</span> Add to itinerary
         </button>

@@ -129,11 +129,14 @@ body {
 .park-title {
   margin-top: 0;
   margin-bottom: 10px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #2e4d38;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
+  max-width: 100%;
+  display: block;
 }
 
 .park-description {
@@ -160,7 +163,7 @@ body {
 
 .info-content {
   color: #5a7d5b;
-  font-size: 0rem;
+  font-size: 0.9rem;
 }
 
 .itinerary-icon {
