@@ -122,9 +122,8 @@ body {
   padding: 15px;
   display: flex;
   flex-direction: column;
-    justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
-
 }
 
 .park-title {
@@ -132,8 +131,8 @@ body {
   margin-bottom: 10px;
   font-size: 1.5rem;
   color: #2e4d38;
-   white-space: nowrap;
-     overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -141,7 +140,7 @@ body {
   margin-bottom: 10px;
   font-size: 1rem;
   color: #5a7d5b;
-   display: -webkit-box;
+  display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -161,7 +160,7 @@ body {
 
 .info-content {
   color: #5a7d5b;
-  font-size: 0.rem;
+  font-size: 0rem;
 }
 
 .itinerary-icon {
@@ -183,7 +182,7 @@ body {
   gap: 8px;
   width: 60%;
   text-align: center;
-  margin-top: 5px;;
+  margin-top: 5px;
 }
 
 .card-button:hover {
@@ -324,7 +323,6 @@ body {
 }
 
 .parks-container {
-
 }
 
 .empty-day {
@@ -355,4 +353,26 @@ body {
   content: '📅';
   margin-right: 10px;
   font-size: 1.1rem;
+}
+
+/* Park Summary */
+.park-summary {
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 13px;
+  color: #273d2d;
+}
+
+.park-summary a {
+  color: #4a7c59;
+}
+
+.summary-separator {
+  color: #a0c4a8;
 }

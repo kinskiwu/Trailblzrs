@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ParkCard from './ParkCard';
 import { mockParks } from '../mocks/mockParks';
+import ParkSummary from '../components/ParkSummary';
 
 const Accordion = () => {
   const [activeDay, setActiveDay] = useState('day-7');
@@ -16,7 +16,7 @@ const Accordion = () => {
     {
       id: 'day-7',
       label: 'Day Seven',
-      parks: [mockParks[0]],
+      parks: [mockParks[0], mockParks[1]],
     },
   ];
 
@@ -46,10 +46,11 @@ const Accordion = () => {
             <div className='accordion-content'>
               {day.parks.length > 0 && (
                 <div className='parks-container'>
-                  {day.parks.map((park) => (
-                    <ParkCard
+                  {day.parks.map((park, index) => (
+                    <ParkSummary
                       key={park.parkId}
                       park={park}
+                      index={index}
                     />
                   ))}
                 </div>
