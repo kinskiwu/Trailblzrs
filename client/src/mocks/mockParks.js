@@ -92,7 +92,7 @@ export const mockParks = [
   {
     parkId: 'E3A8F4D2-6F23-4FAD-B2C5-9F8FDF8B4F64',
     image:
-      'https://www.nps.gov/common/uploads/structured_data/3C7FAF3C-1DD8-B71B-0B1E80A2CE25E86B.jpg',
+      '',
     name: 'Yellowstone National Park',
     city: 'Yellowstone',
     state: 'WY',
@@ -121,7 +121,7 @@ export const mockParks = [
   {
     parkId: '9D3AFC87-B70F-4182-82D8-5AE6A9E9C7D5',
     image:
-      'https://www.nps.gov/common/uploads/structured_data/3C3C35E6-1DD8-B71B-0B843293D5975F5B.jpg',
+      '',
     name: 'Grand Canyon National Park',
     city: 'Grand Canyon',
     state: 'AZ',
@@ -144,7 +144,7 @@ export const mockParks = [
   {
     parkId: '6E7D3DF4-4A5E-4D1F-925F-1F91C50B3D6E',
     image:
-      'https://www.nps.gov/common/uploads/structured_data/3C8511D2-1DD8-B71B-0B3D11B7A7EBAFA4.jpg',
+      '',
     name: 'Acadia National Park',
     city: 'Bar Harbor',
     state: 'ME',
