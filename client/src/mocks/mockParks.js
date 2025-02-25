@@ -91,8 +91,7 @@ export const mockParks = [
   },
   {
     parkId: 'E3A8F4D2-6F23-4FAD-B2C5-9F8FDF8B4F64',
-    image:
-      '',
+    image: '',
     name: 'Yellowstone National Park',
     city: 'Yellowstone',
     state: 'WY',
@@ -120,8 +119,7 @@ export const mockParks = [
   },
   {
     parkId: '9D3AFC87-B70F-4182-82D8-5AE6A9E9C7D5',
-    image:
-      '',
+    image: '',
     name: 'Grand Canyon National Park',
     city: 'Grand Canyon',
     state: 'AZ',
@@ -143,8 +141,7 @@ export const mockParks = [
   },
   {
     parkId: '6E7D3DF4-4A5E-4D1F-925F-1F91C50B3D6E',
-    image:
-      '',
+    image: '',
     name: 'Acadia National Park',
     city: 'Bar Harbor',
     state: 'ME',
