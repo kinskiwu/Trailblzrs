@@ -9,25 +9,32 @@ const ParksProvider = ({ children }) => {
   const [parks, setParks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchParks = async (page = 1) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(`/api/parks?page=${page}`);
+      setParks(response.data.data.parks);
+      setCurrentPage(page);
+    } catch (err) {
+      console.error('Error fetching parks:', err.message);
+      setError('Failed to load parks. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchParks = async () => {
-      try {
-        const response = await axios.get('/api/parks');
-        setParks(response.data.data.parks);
-      } catch (err) {
-        console.error('Error fetching parks:', err.message);
-        setError('Failed to load parks. Please try again.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchParks();
-  }, []);
+    fetchParks(currentPage);
+  }, [currentPage]);
 
   return (
-    <ParksContext.Provider value={{ parks, isLoading, error }}>
+    <ParksContext.Provider
+      value={{ parks, currentPage, fetchParks, isLoading, error }}
+    >
       {children}
     </ParksContext.Provider>
   );

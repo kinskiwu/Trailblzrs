@@ -6,25 +6,21 @@ import { useParks } from '../contexts/ParksContext';
 const ParksList = () => {
   const { parks, isLoading, error } = useParks();
 
-  if (error) return <div>{error}</div>;
+  if (error) return <div className='error'>{error}</div>;
 
-  return (
+  return isLoading ? (
+    <div className='loader'>Loading...</div>
+  ) : (
     <>
-      {isLoading ? (
-        <div className='loader'>Loading...</div>
-      ) : (
-        <>
-          <div className='park-list'>
-            {parks.map((park) => (
-              <ParkCard
-                key={park.parkId}
-                park={park}
-              />
-            ))}
-          </div>
-          <Pagination />
-        </>
-      )}
+      <div className='park-list'>
+        {parks.map((park) => (
+          <ParkCard
+            key={park.parkId}
+            park={park}
+          />
+        ))}
+      </div>
+      <Pagination />
     </>
   );
 };

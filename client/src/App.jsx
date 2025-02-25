@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Parks from './pages/Parks';
 import Trips from './pages/Trips';
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
-import { ParksProvider } from './contexts/ParksContext';
+import ParksProvider from './contexts/ParksContext';
 
 function App() {
   return (
