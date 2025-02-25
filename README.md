@@ -1,22 +1,21 @@
-# Trailblzrs - National Park Road Trip Planner
+# 🚞 Trailblzrs - National Park Road Trip Planner
 
 Trailblzrs is a web application that helps users plan their road trips to US National Parks by providing park information, weather forecasts, and itinerary creation tools.
 
-## Features
+## ✨ Features
 
 - **Park Discovery**: Browse and filter National Parks by location
-- **Weather Integration**: View 7-day weather forecasts for each park (Work in Progress)
-- **Trip Planning**: Create a 7-day itinerary with multiple parks (Work in Progress)
-- **Google Sheets Export**: Export your itinerary with all details (Work in Progress)
+- **Weather Integration**: View 7-day weather forecasts for each park
+- **Trip Planning**: Create a 7-day itinerary with multiple parks
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend**: React, CSS
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **External APIs**: National Park Service API, National Weather Service API
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 ├── client/
@@ -24,7 +23,8 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 │   └── src/
 │       ├── components/     # Reusable UI components
 │       ├── pages/          # Page components
-│       └── mocks/          # Mock data for development
+│       ├── contexts/       # Context providers
+│       └── mocks/          # Mock data
 ├── server/
 │   └── src/
 │       ├── config/         # Configuration files
@@ -32,11 +32,12 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 │       ├── models/         # MongoDB schemas
 │       ├── routes/         # Routes
 │       └── services/       # Business logic
-├── docs/
+├── docs/                   # Documentation
+├── .github/                # Automation scripts
 └── README.md
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -90,22 +91,7 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 
    Navigate to [`http://localhost:5173`](http://localhost:5173)
 
-## Core Functionalities
-
-### Park Selection
-- Uses the National Park Service API to fetch park data
-- Filters parks by location (state)
-
-### Weather Data
-- Integrates with the National Weather Service API
-- Fetches forecast based on park geolocation and specific date within the next 7 days
-
-### Trip Planning
-- Allows assignment of parks to specific days
-- Stores trip details
-- Forwards trip details to Google Sheet (Work in Progress)
-
-## API Endpoints
+## 🔌  API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -113,35 +99,55 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 | `/api/forecast` | GET | Get weather forecast for a park on a specific date |
 | `/api/trips` | POST | Create a new trip |
 | `/api/trips/:tripId` | GET | Retrieve a trip by ID |
-| `/api/trips/:tripId` | PUT | Update a trip by adding/changing a park assignment |
 
-## Design Decisions
+## 🗯️ Design Decisions
 
 - **Additional data for rendering parks**: : I added more park details, such as images and descriptions, to enhance the user experience on the park discovery page.
 
 - **React + Express + JavaScript**: Chosen for rapid development and straightforward implementation. This stack offers a good balance of flexibility and developer productivity for a project of this scope. In a larger production environment, additional tools like TypeScript or Next.js might be considered.
 
 - **MongoDB**: Selected for two primary reasons:
-  - The flexible schema accommodates the varying structure of park data and itineraries
-  - Built-in TTL indexes provide simple document expiration for caching (Work in Progress)
+  - The flexible schema accommodates the varying structure of trip data
+  - Built-in TTL indexes provide simple document expiration for caching (Not yet implemented)
 
   While not as performant for caching as in memory DB like Redis, MongoDB offers a simpler architecture by keeping all data in one system.
 
 - **Embedded Park/Forecast Data in Trips**: Since park information and weather forecasts change over time, embedding this data in trip records preserves the exact information the user saw when planning. This approach ensures historical accuracy of itineraries even when external data sources change.
 
-- **Caching Strategy**: The application implements data caching in MongoDB with TTL indexes. For a production system with higher traffic, a dedicated caching layer might be preferable, but this approach provides a good balance of simplicity and performance for the current requirements. (Work in Progress)
-
-## Additional Documentation
+## 📄 Design Documentation
 
 - **Wireframes**: [Click here](https://balsamiq.cloud/slveto6/plezzeg/r2278)
 - **API Design**: [Click here](docs/Trailblzers-Api-Design.md)
 
-## Stretch Features
+## 📈 Project Status
 
-- Testing (happy paths & edge cases)
-- Caching (Parks data for 7 days, weather data for 24 hours)
-- User authentication
-- Google Maps integration
-- Additional filtering options (activities, entrance fees)
-- Additional sorting options
-- Automated data fetching and Google sheets update
+✅ **Completed**
+- **Park Data Integration**: Implemented full-stack feature for fetching and NPS data with pagination
+- **Weather Forecast Integration**: Implemented data retrieval from NWS API using park coordinates and visit date
+- **Trip Management**: Created trip data modeling, implemented API endpoints for trip creation and retrieval
+- **Itinerary Creation**: Implemented date selection (limited to 7 days), park selection, and forecast data retrieval
+
+🔄 **In Progress**
+- **Trip Updates**: Will take a bit longer as there are multiple steps to retrieve and combine park and forecast data for the trip
+- **Data Caching**: Designed models for park data (7-day TTL) and forecast data (24-hour TTL) using MongoDB TTL feature
+
+📋 **Backlog**
+- **Park Filtering**: By location, activities, historical relevance, and weather conditions
+- **Park Sorting**: By activity count, weather conditions, proximity, and historical significance
+- **Google Sheets Integration**: Export trip itineraries with itinerary details
+
+🍫 **Stretch Goals**
+- Testing: the essential happy paths and edge cases such as parks and weather data fetching
+- Enhanced Data Validation: Implementing validation to handle user inputs and API responses gracefully
+- Authentication: Adding secure authentication would allow personalized trip planning and saving favorites
+- Smart Automation: Setting up scheduled data fetching after TTL expirations and creating event-driven Google Sheet updates when parks have alerts or closures
+- Interactive Maps: Integrating Google Maps would provide visual trip planning and route optimization
+- Traveler-Focused Details: Adding vital information travelers need like park alerts, parking availability, camping options, and entry fees
+
+📝 **Additional Notes**
+I've created simple tickets to plan out the project and smaller PRs to record my progress. Since it's a solo project with time constraints, in a real-world scenario I would have:
+- Asked clarifying questions before design
+- Created more thorough EPICs and user stories with detailed tickets
+- Included more details in PRs
+
+Overall I really enjoyed this process (I love hiking 🥾) and learned a lot from it! Thanks for this invitation!

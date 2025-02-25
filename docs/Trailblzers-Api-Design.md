@@ -1,4 +1,4 @@
-## ⛰Trailblzrs API Design
+## Trailblzrs API Design
 
 ## Overview
 
@@ -125,7 +125,7 @@ Get a trip by ID.
 }
 ```
 
-#### PUT /api/trips/:tripId
+#### PUT /api/trips/:tripId (Work In Progress)
 
 Update a trip by adding or changing a park assignment.
 
@@ -187,7 +187,7 @@ Update a trip by adding or changing a park assignment.
       ],
       forecastDetails: [    // Embedded weather information
         {
-          parkId: String,   
+          parkId: String,
           high: Number,     // High temperature
           low: Number,      // Low temperature
           weather: String,  // Weather conditions
