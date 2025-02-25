@@ -14,7 +14,7 @@ function App() {
           <Routes>
             <Route
               path='/'
-              element={<Parks />}
+              element={<Parks />} //Temp: will replace with <Home/> when ready
             />
             <Route
               path='/parks'
