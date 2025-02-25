@@ -20,7 +20,10 @@ const ParksProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [selectedPark, setSelectedPark] = useState(null);
+  const [forecast, setForecast] = useState(null);
+  const [visitDate, setVisitDate] = useState(null);
+  
   /**
    * Fetches parks data for the given page.
    * @param {number} [page=1] - Page number.
@@ -45,9 +48,43 @@ const ParksProvider = ({ children }) => {
     fetchParks(currentPage);
   }, [currentPage]); // Runs only when currentPage updates
 
+  // Fetch forecast when a park is selected
+  useEffect(() => {
+    const fetchForecast = async (parkId, visitDate) => {
+
+      if (!parkId || !visitDate) return;
+
+      try {
+        const response = await axios.get(
+          `http://localhost:5001/api/forecast/?parkId=${parkId}&visitDate=${visitDate}`,
+        );
+
+        console.log('Forecast data:', response.data.data);
+        setForecast(response.data.data);
+      } catch (err) {
+        console.error('Error fetching forecast:', err.message);
+      }
+    };
+
+    if (selectedPark && visitDate) {
+      fetchForecast(selectedPark.parkId, visitDate);
+    }
+  }, [selectedPark, visitDate]);
+
   return (
     <ParksContext.Provider
-      value={{ parks, currentPage, fetchParks, isLoading, error }}
+      value={{
+        parks,
+        currentPage,
+        fetchParks,
+        selectedPark,
+        setSelectedPark,
+        forecast,
+        visitDate,
+        setVisitDate,
+        isLoading,
+        error,
+      }}
     >
       {children}
     </ParksContext.Provider>

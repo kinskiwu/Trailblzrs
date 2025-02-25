@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
+import { useParks } from '../contexts/ParksContext';
 
 const ParkCard = ({ park }) => {
   const [isDescExpanded, setIsDescExpanded] = useState(false);
+  const { selectedPark, setSelectedPark, visitDate } = useParks();
+
+  const handleSelect = () => {
+    if (visitDate) {
+      setSelectedPark(park);
+    }
+  };
 
   // Helper func to render info rows
   const renderInfoRow = (label, content) => {
@@ -14,7 +22,9 @@ const ParkCard = ({ park }) => {
   };
 
   return (
-    <div className='park-card'>
+    <div
+      className={`park-card ${selectedPark?.parkId === park.parkId ? 'selected' : ''}`}
+    >
       <div className='park-image'>
         <img
           src={park.image || 'https://loremflickr.com/1280/720'}
@@ -47,7 +57,11 @@ const ParkCard = ({ park }) => {
         )}
         {park.npsLink &&
           renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
-        <button className='card-button'>
+        <button
+          className='card-button'
+          onClick={handleSelect}
+          disabled={!visitDate}
+        >
           <span className='itinerary-icon'>✓</span> Add to itinerary
         </button>
       </div>
