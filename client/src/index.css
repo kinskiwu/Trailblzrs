@@ -268,3 +268,91 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Accordion*/
+.accordion-container {
+  border: 1px solid #a0c4a8;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(46, 77, 56, 0.1);
+}
+
+.accordion-item {
+  border-bottom: 1px solid #d3e0d5;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-header {
+  padding: 15px 20px;
+  background-color: #f5f9f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: #2e4d38;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.accordion-header:hover {
+  background-color: #e0efe2;
+}
+
+.accordion-header.active {
+  background-color: #e0efe2;
+  border-bottom: 1px solid #d3e0d5;
+}
+
+.day-label {
+  font-size: 1rem;
+}
+
+.expand-icon {
+  font-size: 18px;
+  color: #4a7c59;
+  font-weight: bold;
+}
+
+.accordion-content {
+  padding: 15px 20px;
+  background-color: #ffffff;
+}
+
+.parks-container {
+
+}
+
+.empty-day {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+/* Date Display */
+.date-display {
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  color: #2e4d38;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(46, 77, 56, 0.1);
+}
+
+.date-display span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.date-display span::before {
+  content: '📅';
+  margin-right: 10px;
+  font-size: 1.1rem;
+}

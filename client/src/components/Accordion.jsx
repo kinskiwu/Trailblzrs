@@ -7,20 +7,20 @@ const Accordion = () => {
 
   // Initialize days with parks
   const days = [
-    { id: 'day-1', label: 'Day One - February 1st', parks: [] },
-    { id: 'day-2', label: 'Day Two - February 2nd', parks: [] },
-    { id: 'day-3', label: 'Day Three - February 3rd', parks: [] },
-    { id: 'day-4', label: 'Day Four - February 4th', parks: [] },
-    { id: 'day-5', label: 'Day Five - February 5th', parks: [] },
-    { id: 'day-6', label: 'Day Six - February 6th', parks: [] },
+    { id: 'day-1', label: 'Day One', parks: [] },
+    { id: 'day-2', label: 'Day Two', parks: [] },
+    { id: 'day-3', label: 'Day Three', parks: [] },
+    { id: 'day-4', label: 'Day Four', parks: [] },
+    { id: 'day-5', label: 'Day Five', parks: [] },
+    { id: 'day-6', label: 'Day Six', parks: [] },
     {
       id: 'day-7',
-      label: 'Day Seven - February 7th',
+      label: 'Day Seven',
       parks: [mockParks[0]],
     },
   ];
 
-  // Toggle accordion panel
+  // Toggle accordion
   const handleDayClick = (dayId) => {
     setActiveDay(activeDay === dayId ? null : dayId);
   };
