@@ -32,15 +32,15 @@ export class ParksService {
       }
 
       // Transform NPS API response
-      const parks = data.data.map(park => ({
+      const parks = data.data.map((park) => ({
         parkId: park.id,
         image: park.images?.length > 0 ? park.images[0].url : '',
         name: park.fullName,
         city: park.addresses?.[0]?.city || '',
         state: park.addresses?.[0]?.stateCode || '',
         description: park.description,
-        activities: park.activities?.map(a => a.name).slice(0, 5) || [],
-        historicalRelevance: park.topics?.map(t => t.name).slice(0, 5) || [],
+        activities: park.activities?.map((a) => a.name).slice(0, 5) || [],
+        historicalRelevance: park.topics?.map((t) => t.name).slice(0, 5) || [],
         npsLink: `https://www.nps.gov/${park.parkCode}`,
         directions: park.directionsUrl || '',
         geolocation: {
@@ -50,7 +50,7 @@ export class ParksService {
       }));
 
       return {
-        parks
+        parks,
       };
     } catch (error) {
       console.error('Failed to fetch parks:', error);
