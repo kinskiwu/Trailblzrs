@@ -16,8 +16,7 @@ function App() {
               <Route
                 path='/'
                 element={<Parks />}
-              />{' '}
-              //Temp: will replace with Home when ready
+              />
               <Route
                 path='/parks'
                 element={<Parks />}
