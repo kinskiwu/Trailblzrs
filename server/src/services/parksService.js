@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getEnv } from '../config/dotenvConfig.js';
+import { Park } from '../models/Park.js';
 
 getEnv();
 
@@ -53,6 +54,14 @@ export class ParksService {
           longitude: parseFloat(park.longitude) || null,
         },
       }));
+
+      // Save parks to MongoDB if they are new
+      for (const park of parks) {
+        await Park.findOneAndUpdate({ parkId: park.parkId }, park, {
+          upsert: true,
+          new: true,
+        });
+      }
 
       return {
         parks,
