@@ -135,3 +135,5 @@ I've created simple tickets to plan out the project and smaller PRs to record my
 - Included more details in PRs.
 
 Overall, I really enjoyed this process (I love hiking 🥾) and learned a lot from it! Thanks for this invitation!
+
+💪 **Enhanced Features**
