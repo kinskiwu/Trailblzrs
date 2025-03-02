@@ -7,12 +7,25 @@ getEnv();
 const BASE_URL = 'https://developer.nps.gov/api/v1/parks';
 const API_KEY = process.env.NPS_API_KEY;
 
+if (!API_KEY) {
+  throw new Error(
+    'API_KEY is not defined. Please set the NPS_API_KEY environment variable.',
+  );
+}
+
 export class ParksService {
   constructor(apiClient = axios, apiKey = API_KEY) {
     this.apiClient = apiClient;
     this.apiKey = apiKey;
   }
 
+  /**
+   * Fetches parks from the NPS API with pagination
+   * @param {number} page - The page number (default: 1)
+   * @param {number} limit - Number of parks per page (default: 6)
+   * @returns {Promise<{parks: object[]}>} - A list of formatted park objects
+   * @throws {Error} - Throws an error if the API request fails
+   */
   async getParks(page = 1, limit = 6) {
     try {
       // Calculate start parameter
@@ -48,6 +61,14 @@ export class ParksService {
           longitude: parseFloat(park.longitude) || null,
         },
       }));
+
+      // Save parks to MongoDB if they are new
+      for (const park of parks) {
+        await Park.findOneAndUpdate({ parkId: park.parkId }, park, {
+          upsert: true,
+          new: true,
+        });
+      }
 
       return {
         parks,

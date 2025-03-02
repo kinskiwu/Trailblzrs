@@ -1,4 +1,3 @@
-import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useParks } from '../contexts/ParksContext';
@@ -8,7 +7,7 @@ const ActionControls = () => {
 
   const today = new Date();
   const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 7);
+  maxDate.setDate(today.getDate() + 7); // Allows selecting up to 7 days ahead
 
   return (
     <div className='control-container'>

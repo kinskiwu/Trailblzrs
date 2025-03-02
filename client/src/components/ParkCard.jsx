@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParks } from '../contexts/ParksContext';
 
 const ParkCard = ({ park }) => {
@@ -25,6 +25,7 @@ const ParkCard = ({ park }) => {
     <div
       className={`park-card ${selectedPark?.parkId === park.parkId ? 'selected' : ''}`}
     >
+      {/* Park Image */}
       <div className='park-image'>
         <img
           src={park.image || 'https://loremflickr.com/1280/720'}
@@ -32,6 +33,7 @@ const ParkCard = ({ park }) => {
           className='actual-image'
         />
       </div>
+      {/* Park Information */}
       <div className='park-info'>
         <h3 className='park-title'>{park.name}</h3>
         <p
@@ -57,6 +59,7 @@ const ParkCard = ({ park }) => {
         )}
         {park.npsLink &&
           renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
+        {/* Add to Itinerary Button */}
         <button
           className='card-button'
           onClick={handleSelect}

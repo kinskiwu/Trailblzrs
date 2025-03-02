@@ -1,4 +1,3 @@
-import React from 'react';
 import Accordion from '../components/Accordion';
 import ExportButton from '../components/ExportButton';
 import 'react-datepicker/dist/react-datepicker.css';

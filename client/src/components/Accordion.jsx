@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { mockParks } from '../mocks/mockParks';
 import ParkSummary from '../components/ParkSummary';
 

@@ -2,11 +2,14 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 /**
- * Hook to access parks data and actions.
- * @returns {object} Parks context value.
+ * Context for managing parks data and user selections.
  */
 const ParksContext = createContext();
 
+/**
+ * Hook to access parks data and actions.
+ * @returns {object} Parks context value.
+ */
 export const useParks = () => useContext(ParksContext);
 
 /**
@@ -16,21 +19,26 @@ export const useParks = () => useContext(ParksContext);
  * @returns {JSX.Element} Context provider.
  */
 const ParksProvider = ({ children }) => {
+  // Parks state
   const [parks, setParks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [parksLoading, setParksLoading] = useState(true);
+  const [parksError, setParksError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Forecast state
   const [selectedPark, setSelectedPark] = useState(null);
   const [forecast, setForecast] = useState(null);
+  const [forecastLoading, setForecastLoading] = useState(false);
+  const [forecastError, setForecastError] = useState(null);
   const [visitDate, setVisitDate] = useState(null);
 
   /**
-   * Fetches parks data for the given page.
-   * @param {number} [page=1] - Page number.
+   * Fetches a list of parks from the API.
+   * @param {number} [page=1] - The page number to fetch.
    */
   const fetchParks = async (page = 1) => {
-    setIsLoading(true);
-    setError(null);
+    setParksLoading(true);
+    setParksError(null);
 
     try {
       const response = await axios.get(`/api/parks?page=${page}`);
@@ -38,9 +46,9 @@ const ParksProvider = ({ children }) => {
       setCurrentPage(page); // To reflect latest request
     } catch (err) {
       console.error('Error fetching parks:', err.message);
-      setError('Failed to load parks. Please try again.');
+      setParksError('Failed to load parks. Please try again.');
     } finally {
-      setIsLoading(false);
+      setParksLoading(false);
     }
   };
 
@@ -48,20 +56,31 @@ const ParksProvider = ({ children }) => {
     fetchParks(currentPage);
   }, [currentPage]); // Runs only when currentPage updates
 
-  // Fetch forecast when a park is selected
+  /**
+   * Fetches weather forecast for the selected park and visit date.
+   *
+   * @param {string} parkId - The ID of the selected park.
+   * @param {string} visitDate - The planned visit date.
+   */
   useEffect(() => {
     const fetchForecast = async (parkId, visitDate) => {
       if (!parkId || !visitDate) return;
 
+      setForecastLoading(true);
+      setForecastError(null);
+
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/forecast/?parkId=${parkId}&visitDate=${visitDate}`,
+          `/api/forecast/?parkId=${parkId}&visitDate=${visitDate}`,
         );
 
         console.log('Forecast data:', response.data.data);
         setForecast(response.data.data);
       } catch (err) {
         console.error('Error fetching forecast:', err.message);
+        setForecastError('Failed to fetch forecast. Please try again.');
+      } finally {
+        setForecastLoading(false);
       }
     };
 
@@ -73,16 +92,21 @@ const ParksProvider = ({ children }) => {
   return (
     <ParksContext.Provider
       value={{
+        // Parks data
         parks,
         currentPage,
         fetchParks,
+        parksLoading,
+        parksError,
+
+        // Forecast data
         selectedPark,
         setSelectedPark,
         forecast,
+        forecastLoading,
+        forecastError,
         visitDate,
         setVisitDate,
-        isLoading,
-        error,
       }}
     >
       {children}

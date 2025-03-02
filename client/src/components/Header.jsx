@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router';
 
 const Header = () => {
   return (
@@ -12,18 +12,18 @@ const Header = () => {
         </div>
 
         <div className='nav-links'>
-          <a
-            href='/parks'
+          <Link
+            to='/parks'
             className='nav-link'
           >
             <span className='nav-icon'>🔍</span> Discover Parks
-          </a>
-          <a
-            href='/trips'
+          </Link>
+          <Link
+            to='/trips'
             className='nav-link'
           >
             <span className='nav-icon'>📋</span> Itinerary
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

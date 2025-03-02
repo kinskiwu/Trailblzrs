@@ -12,6 +12,12 @@ export class ForecastService {
     };
   }
 
+  /**
+   * Retrieves the weather forecast for a specific park and date
+   * @param {string} parkId - The park's unique identifier
+   * @param {string} visitDate - The visit date (YYYY-MM-DD)
+   * @returns {Promise<object|null>} - Forecast data or `null` if park not found
+   */
   async getForecastByParkId(parkId, visitDate) {
     try {
       // Fetch park details from DB
@@ -22,7 +28,7 @@ export class ForecastService {
         !park.geolocation?.latitude ||
         !park.geolocation?.longitude
       ) {
-        return null;
+        throw new Error('Park not found or missing geolocation data');
       }
 
       // Fetch forecast using geolocation
@@ -46,6 +52,13 @@ export class ForecastService {
     }
   }
 
+  /**
+   * Calls the NWS API to fetch weather data based on latitude/longitude
+   * @param {number} latitude - Park's latitude
+   * @param {number} longitude - Park's longitude
+   * @param {string} visitDate - The visit date (YYYY-MM-DD)
+   * @returns {Promise<object>} - Forecast details including temperature, wind speed, and conditions
+   */
   async getForecastFromNWSApi(latitude, longitude, visitDate) {
     try {
       const pointsResponse = await this.apiClient.get(
