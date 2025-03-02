@@ -1,4 +1,3 @@
-import React from 'react';
 import ParkCard from './ParkCard';
 import Pagination from './Pagination';
 import { useParks } from '../contexts/ParksContext';

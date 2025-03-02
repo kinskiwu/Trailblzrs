@@ -1,4 +1,3 @@
-import React from 'react';
 import ActionControls from '../components/ActionControls';
 import ParksList from '../components/ParksList';
 

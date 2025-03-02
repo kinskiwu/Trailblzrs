@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParks } from '../contexts/ParksContext';
 
 const ParkSummary = ({ park, index }) => {

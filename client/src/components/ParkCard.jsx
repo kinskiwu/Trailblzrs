@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParks } from '../contexts/ParksContext';
 
 const ParkCard = ({ park }) => {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getEnv } from '../config/dotenvConfig.js';
-import { Park } from '../models/parkSchema.js';
 
 getEnv();
 
