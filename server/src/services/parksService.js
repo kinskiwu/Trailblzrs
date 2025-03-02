@@ -6,6 +6,12 @@ getEnv();
 const BASE_URL = 'https://developer.nps.gov/api/v1/parks';
 const API_KEY = process.env.NPS_API_KEY;
 
+if (!API_KEY) {
+  throw new Error(
+    'API_KEY is not defined. Please set the NPS_API_KEY environment variable.',
+  );
+}
+
 export class ParksService {
   constructor(apiClient = axios, apiKey = API_KEY) {
     this.apiClient = apiClient;
