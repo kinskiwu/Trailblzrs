@@ -1,4 +1,8 @@
-import { badRequestError, notFoundError, serverError } from '../utils/errorResponses.js';
+import {
+  badRequestError,
+  notFoundError,
+  serverError,
+} from '../utils/errorResponses.js';
 export class TripsController {
   constructor(tripsService) {
     this.tripsService = tripsService;

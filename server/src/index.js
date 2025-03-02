@@ -7,7 +7,7 @@ import { connectDB } from './config/dbConfig.js';
 import { notFoundError } from './utils/errorResponses.js';
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3000;
 connectDB();
 
 app.use(cors());

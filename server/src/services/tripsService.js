@@ -14,10 +14,10 @@ export class TripsService {
         {
           new: true, // Return new document
           upsert: true, // Create document if doesn't exist
-        }
+        },
       );
 
-       return { tripId: newTrip.tripId, tripDetails: newTrip.tripDetails };
+      return { tripId: newTrip.tripId, tripDetails: newTrip.tripDetails };
     } catch (err) {
       console.error('Failed to create trip:', err);
       throw new Error('Failed to create trip');
