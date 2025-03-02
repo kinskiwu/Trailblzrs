@@ -1,3 +1,5 @@
+import { serverError } from '../utils/errorResponses.js';
+
 export class ParksController {
   constructor(parksService) {
     this.parksService = parksService;
@@ -14,12 +16,8 @@ export class ParksController {
       res.locals.parks = result.parks;
       next();
     } catch (err) {
-      res.locals.error = {
-        status: 500,
-        message: 'Failed to fetch parks',
-        details: err.message,
-      };
-      next(err);
+      res.locals.error = serverError('Failed to fetch parks', err.message);
+      next();
     }
   }
 }

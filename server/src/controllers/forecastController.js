@@ -1,3 +1,5 @@
+import { badRequestError, serverError } from '../utils/errorResponses.js';
+
 export class ForecastController {
   constructor(forecastService) {
     this.forecastService = forecastService;
@@ -9,7 +11,10 @@ export class ForecastController {
       const { parkId, visitDate } = req.query;
 
       if (!parkId || !visitDate) {
-        throw new Error('Both parkId and visitDate are required');
+        res.locals.error = badRequestError(
+          'Both parkId and visitDate are required',
+        );
+        return next();
       }
 
       const forecast = await this.forecastService.getForecastByParkId(
@@ -20,11 +25,10 @@ export class ForecastController {
       res.locals.forecastData = forecast;
       next();
     } catch (err) {
-      res.locals.error = {
-        status: 500,
-        message: 'Failed to fetch forecast data',
-        details: err.message,
-      };
+      res.locals.error = serverError(
+        'Failed to fetch forecast data',
+        err.message,
+      );
       next();
     }
   }

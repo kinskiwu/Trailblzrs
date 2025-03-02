@@ -22,9 +22,9 @@ export class ForecastService {
         !park.geolocation?.latitude ||
         !park.geolocation?.longitude
       ) {
-        return null;
+        throw new Error('Park not found or missing geolocation data');
       }
-
+      
       // Fetch forecast using geolocation
       const forecast = await this.getForecastFromNWSApi(
         park.geolocation.latitude,
