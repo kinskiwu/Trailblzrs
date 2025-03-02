@@ -4,6 +4,7 @@ import parksRouter from './routes/parksRouter.js';
 import forecastRouter from './routes/forecastRouter.js';
 import tripsRouter from './routes/tripsRouter.js';
 import { connectDB } from './config/dbConfig.js';
+import { notFoundError } from './utils/errorResponses.js';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -21,6 +22,17 @@ app.use('/api/parks', parksRouter);
 app.use('/api/forecast', forecastRouter);
 
 app.use('/api/trips', tripsRouter);
+
+app.use('/api/*', (req, res) => {
+  const error = notFoundError('Endpoint');
+  error.details = `${req.method} ${req.originalUrl} is not a valid endpoint`;
+
+  res.status(error.status).json({
+    success: false,
+    message: error.message,
+    details: error.details,
+  });
+});
 
 app
   .listen(PORT, () => {
