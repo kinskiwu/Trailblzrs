@@ -8,15 +8,16 @@ export class TripsService {
 
   async createTrip(tripId = uuidv4()) {
     try {
-      const existingTrip = await this.tripModel.findOne({ tripId });
-      if (existingTrip) return existingTrip;
+      const newTrip = await this.tripModel.findOneAndUpdate(
+        { tripId },
+        { tripId, tripDetails: [] },
+        {
+          new: true, // Return new document
+          upsert: true, // Create document if doesn't exist
+        }
+      );
 
-      const newTrip = await this.tripModel.create({
-        tripId,
-        tripDetails: [],
-      });
-
-      return { tripId: newTrip.tripId, tripDetails: newTrip.tripDetails };
+       return { tripId: newTrip.tripId, tripDetails: newTrip.tripDetails };
     } catch (err) {
       console.error('Failed to create trip:', err);
       throw new Error('Failed to create trip');
