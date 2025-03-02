@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getEnv } from '../config/dotenvConfig.js';
-import { Park } from '../models/Park.js';
+import { Park } from '../models/parkSchema.js';
 
 getEnv();
 
@@ -19,6 +19,13 @@ export class ParksService {
     this.apiKey = apiKey;
   }
 
+  /**
+   * Fetches parks from the NPS API with pagination
+   * @param {number} page - The page number (default: 1)
+   * @param {number} limit - Number of parks per page (default: 6)
+   * @returns {Promise<{parks: object[]}>} - A list of formatted park objects
+   * @throws {Error} - Throws an error if the API request fails
+   */
   async getParks(page = 1, limit = 6) {
     try {
       // Calculate start parameter

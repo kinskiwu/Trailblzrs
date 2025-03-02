@@ -3,6 +3,7 @@ import {
   notFoundError,
   serverError,
 } from '../utils/errorResponses.js';
+
 export class TripsController {
   constructor(tripsService) {
     this.tripsService = tripsService;
@@ -11,6 +12,12 @@ export class TripsController {
     this.updateTrip = this.updateTrip.bind(this);
   }
 
+  /**
+   * Creates a new trip or retrieves an existing one
+   * @param {Request} _ - Express request object (not used)
+   * @param {Response} res - Express response object
+   * @param {NextFunction} next - Express next function
+   */
   async createTrip(_, res, next) {
     try {
       const newTrip = await this.tripsService.createTrip();
@@ -23,6 +30,12 @@ export class TripsController {
     }
   }
 
+  /**
+   * Fetches trip details by trip ID
+   * @param {Request} req - Express request object
+   * @param {Response} res - Express response object
+   * @param {NextFunction} next - Express next function
+   */
   async getTripById(req, res, next) {
     try {
       const { tripId } = req.params;
@@ -47,6 +60,12 @@ export class TripsController {
     }
   }
 
+  /**
+   * Updates trip details by adding or modifying a park visit
+   * @param {Request} req - Express request object
+   * @param {Response} res - Express response object
+   * @param {NextFunction} next - Express next function
+   */
   async updateTrip(req, res, next) {
     try {
       const { tripId } = req.params;

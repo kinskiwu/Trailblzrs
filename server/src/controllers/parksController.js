@@ -5,6 +5,13 @@ export class ParksController {
     this.parksService = parksService;
     this.getParks = this.getParks.bind(this);
   }
+
+  /**
+   * Fetches a paginated list of parks
+   * @param {Request} req - Express request object
+   * @param {Response} res - Express response object
+   * @param {NextFunction} next - Express next function
+   */
   async getParks(req, res, next) {
     try {
       // Get page and limit from query params, default to 1 and 6

@@ -6,6 +6,11 @@ export class TripsService {
     this.tripModel = tripModel;
   }
 
+  /**
+   * Creates a new trip or retrieves an existing one
+   * @param {string} [tripId] - Optional trip ID; generates a new one if not provided
+   * @returns {Promise<{tripId: string, tripDetails: object[]}>} - Trip object
+   */
   async createTrip(tripId = uuidv4()) {
     try {
       const newTrip = await this.tripModel.findOneAndUpdate(
@@ -24,6 +29,11 @@ export class TripsService {
     }
   }
 
+  /**
+   * Retrieves a trip by its unique ID
+   * @param {string} tripId - The trip ID
+   * @returns {Promise<object|null>} - Trip object or `null` if not found
+   */
   async getTripById(tripId) {
     try {
       return await this.tripModel.findOne({ tripId }, 'tripId tripDetails');

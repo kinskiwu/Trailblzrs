@@ -6,6 +6,12 @@ export class ForecastController {
     this.getForecast = this.getForecast.bind(this);
   }
 
+  /**
+   * Fetches the weather forecast for a given park and date
+   * @param {Request} req - Express request object
+   * @param {Response} res - Express response object
+   * @param {NextFunction} next - Express next function
+   */
   async getForecast(req, res, next) {
     try {
       const { parkId, visitDate } = req.query;

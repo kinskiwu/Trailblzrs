@@ -6,22 +6,25 @@ import tripsRouter from './routes/tripsRouter.js';
 import { connectDB } from './config/dbConfig.js';
 import { notFoundError } from './utils/errorResponses.js';
 
+// Setup Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Health check route
 app.get('/api/test', (_, res) => {
   res.json({ message: 'Welcome to Trailblzrs API!' });
 });
 
+// API routes
 app.use('/api/parks', parksRouter);
-
 app.use('/api/forecast', forecastRouter);
-
 app.use('/api/trips', tripsRouter);
 
+// 404 handler route
 app.use('/api/*', (req, res) => {
   const error = notFoundError('Endpoint');
   error.details = `${req.method} ${req.originalUrl} is not a valid endpoint`;
@@ -33,6 +36,10 @@ app.use('/api/*', (req, res) => {
   });
 });
 
+/**
+ * Starts server after connecting to database
+ * @returns {http.Server} HTTP server instance
+ */
 const startServer = async () => {
   try {
     await connectDB();
@@ -53,4 +60,5 @@ const startServer = async () => {
   }
 };
 
+// Initialize app
 startServer();
