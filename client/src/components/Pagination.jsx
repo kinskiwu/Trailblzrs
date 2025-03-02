@@ -1,7 +1,7 @@
 import { useParks } from '../contexts/ParksContext';
 
 const Pagination = () => {
-  const { currentPage, fetchParks } = useParks();
+  const { currentPage, fetchParks, parksError } = useParks();
 
   // Moves to next page & fetching new parks
   const handleNextPage = () => {
@@ -28,6 +28,7 @@ const Pagination = () => {
       <button
         className='page-button'
         onClick={handleNextPage}
+        disabled={parksError} // Disable if error exists
       >
         &gt;
       </button>

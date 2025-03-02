@@ -1,7 +1,9 @@
 import { useParks } from '../contexts/ParksContext';
 
 const ParkSummary = ({ park, index }) => {
-  const { forecast } = useParks();
+  const { forecast, forecastError } = useParks();
+
+  if (forecastError) return <div className='error'>{forecastError}</div>;
 
   return (
     <div className='park-summary'>
