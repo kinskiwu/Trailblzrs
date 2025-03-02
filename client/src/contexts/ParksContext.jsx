@@ -2,11 +2,14 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 /**
- * Hook to access parks data and actions.
- * @returns {object} Parks context value.
+ * Context for managing parks data and user selections.
  */
 const ParksContext = createContext();
 
+/**
+ * Hook to access parks data and actions.
+ * @returns {object} Parks context value.
+ */
 export const useParks = () => useContext(ParksContext);
 
 /**
@@ -30,8 +33,8 @@ const ParksProvider = ({ children }) => {
   const [visitDate, setVisitDate] = useState(null);
 
   /**
-   * Fetches parks data for the given page.
-   * @param {number} [page=1] - Page number.
+   * Fetches a list of parks from the API.
+   * @param {number} [page=1] - The page number to fetch.
    */
   const fetchParks = async (page = 1) => {
     setParksLoading(true);
@@ -53,7 +56,12 @@ const ParksProvider = ({ children }) => {
     fetchParks(currentPage);
   }, [currentPage]); // Runs only when currentPage updates
 
-  // Fetch forecast when a park is selected
+  /**
+   * Fetches weather forecast for the selected park and visit date.
+   *
+   * @param {string} parkId - The ID of the selected park.
+   * @param {string} visitDate - The planned visit date.
+   */
   useEffect(() => {
     const fetchForecast = async (parkId, visitDate) => {
       if (!parkId || !visitDate) return;

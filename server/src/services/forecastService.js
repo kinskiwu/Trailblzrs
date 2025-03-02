@@ -11,7 +11,7 @@ export class ForecastService {
       Accept: 'application/json',
     };
   }
-  
+
   /**
    * Retrieves the weather forecast for a specific park and date
    * @param {string} parkId - The park's unique identifier
