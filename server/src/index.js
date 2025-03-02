@@ -8,7 +8,6 @@ import { notFoundError } from './utils/errorResponses.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-connectDB();
 
 app.use(cors());
 app.use(express.json());
@@ -34,17 +33,24 @@ app.use('/api/*', (req, res) => {
   });
 });
 
-app
-  .listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  })
-  .on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-      console.log(`Port ${PORT} is in use. Trying another port...`);
-      app.listen(PORT + 1, () =>
-        console.log(`Server running on http://localhost:${PORT + 1}`),
-      );
-    } else {
-      console.error('Server error:', err);
-    }
-  });
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    const server = app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+
+    server.on('error', (err) => {
+      console.error('Server error:', err.message);
+      process.exit(1);
+    });
+
+    return server;
+  } catch (err) {
+    console.error('Failed to start:', err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
