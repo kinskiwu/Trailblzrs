@@ -14,11 +14,12 @@ export class ParksController {
    */
   async getParks(req, res, next) {
     try {
-      // Get page and limit from query params, default to 1 and 6
+      // Get page, limit & state from query params, default to 1, 6 and null
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 6;
+      const state = req.query.state || null;
 
-      const result = await this.parksService.getParks(page, limit);
+      const result = await this.parksService.getParks(page, limit, state);
 
       res.locals.parks = result.parks;
       next();

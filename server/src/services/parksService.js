@@ -27,19 +27,25 @@ export class ParksService {
    * @returns {Promise<{parks: object[]}>} - A list of formatted park objects
    * @throws {Error} - Throws an error if the API request fails
    */
-  async getParks(page = 1, limit = 6) {
+  async getParks(page = 1, limit = 6, state = null) {
     try {
       // Calculate start parameter
       const start = (page - 1) * limit;
 
+      // Build query params
+      const params = {
+        start,
+        limit,
+        api_key: this.apiKey,
+      };
+
+      // Add state code if provided
+      if (state) {
+        params.stateCode = state.toUpperCase();
+      }
+
       // Fetch parks from NPS API
-      const { data } = await this.apiClient.get(BASE_URL, {
-        params: {
-          start,
-          limit,
-          api_key: this.apiKey,
-        },
-      });
+      const { data } = await this.apiClient.get(BASE_URL, { params });
 
       if (!data || !data.data) {
         throw new Error('Invalid response from NPS API');
