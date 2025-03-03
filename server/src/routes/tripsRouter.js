@@ -1,11 +1,21 @@
 import { Router } from 'express';
 import { TripsController } from '../controllers/tripsController.js';
 import { TripsService } from '../services/tripsService.js';
+import { ParksService } from '../services/parksService.js';
+import { ForecastService } from '../services/forecastService.js';
 
-// Initialize router and dependencies
+// Initialize router and services
 const tripsRouter = Router();
 const tripsService = new TripsService();
-const tripsController = new TripsController(tripsService);
+const parksService = new ParksService();
+const forecastService = new ForecastService();
+
+// Inject dependencies into controller
+const tripsController = new TripsController(
+  tripsService,
+  parksService,
+  forecastService,
+);
 
 // POST /api/trips - Create a new trip
 tripsRouter.post('/', tripsController.createTrip, (_, res) => {
