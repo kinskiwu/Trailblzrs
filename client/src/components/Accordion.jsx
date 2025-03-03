@@ -1,58 +1,52 @@
 import { useState } from 'react';
-import { mockParks } from '../mocks/mockParks';
-import ParkSummary from '../components/ParkSummary';
+import ParkSummary from './ParkSummary';
 
-const Accordion = () => {
-  const [activeDay, setActiveDay] = useState('day-7');
+const Accordion = ({ tripDetails }) => {
+  const [activeDay, setActiveDay] = useState(tripDetails[0]?.date || null);
 
-  // Initialize days with parks
-  const days = [
-    { id: 'day-1', label: 'Day One', parks: [] },
-    { id: 'day-2', label: 'Day Two', parks: [] },
-    { id: 'day-3', label: 'Day Three', parks: [] },
-    { id: 'day-4', label: 'Day Four', parks: [] },
-    { id: 'day-5', label: 'Day Five', parks: [] },
-    { id: 'day-6', label: 'Day Six', parks: [] },
-    {
-      id: 'day-7',
-      label: 'Day Seven',
-      parks: [mockParks[0], mockParks[1]],
-    },
-  ];
-
-  // Toggle accordion
-  const handleDayClick = (dayId) => {
-    setActiveDay(activeDay === dayId ? null : dayId);
+  const handleDayClick = (date) => {
+    setActiveDay(activeDay === date ? null : date);
   };
+
+  if (!tripDetails.length) {
+    return <div>No trip details available.</div>;
+  }
 
   return (
     <div className='accordion-container'>
-      {days.map((day) => (
+      {tripDetails.map((day, index) => (
         <div
-          key={day.id}
+          key={day.date}
           className='accordion-item'
         >
           <div
-            className={`accordion-header ${activeDay === day.id ? 'active' : ''}`}
-            onClick={() => handleDayClick(day.id)}
+            className={`accordion-header ${activeDay === day.date ? 'active' : ''}`}
+            onClick={() => handleDayClick(day.date)}
           >
-            <span className='day-label'>{day.label}</span>
+            <span className='day-label'>
+              Day {index + 1}: {day.date}
+            </span>
             <span className='expand-icon'>
-              {activeDay === day.id ? '−' : '+'}
+              {activeDay === day.date ? '−' : '+'}
             </span>
           </div>
-
-          {activeDay === day.id && (
+          {activeDay === day.date && (
             <div className='accordion-content'>
-              {day.parks.length > 0 && (
+              {day.parkDetails.length > 0 && (
                 <div className='parks-container'>
-                  {day.parks.map((park, index) => (
-                    <ParkSummary
-                      key={park.parkId}
-                      park={park}
-                      index={index}
-                    />
-                  ))}
+                  {day.parkDetails.map((park, idx) => {
+                    const forecast = day.forecastDetails.find(
+                      (f) => f.parkId === park.parkId,
+                    );
+                    return (
+                      <ParkSummary
+                        key={park.parkId}
+                        park={park}
+                        forecast={forecast}
+                        index={idx}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>

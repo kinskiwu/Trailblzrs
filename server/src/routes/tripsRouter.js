@@ -1,11 +1,21 @@
 import { Router } from 'express';
 import { TripsController } from '../controllers/tripsController.js';
 import { TripsService } from '../services/tripsService.js';
+import { ParksService } from '../services/parksService.js';
+import { ForecastService } from '../services/forecastService.js';
 
-// Initialize router and dependencies
+// Initialize router and services
 const tripsRouter = Router();
 const tripsService = new TripsService();
-const tripsController = new TripsController(tripsService);
+const parksService = new ParksService();
+const forecastService = new ForecastService();
+
+// Inject dependencies into controller
+const tripsController = new TripsController(
+  tripsService,
+  parksService,
+  forecastService,
+);
 
 // POST /api/trips - Create a new trip
 tripsRouter.post('/', tripsController.createTrip, (_, res) => {
@@ -16,7 +26,9 @@ tripsRouter.post('/', tripsController.createTrip, (_, res) => {
       details: res.locals.error.details,
     });
   }
-  return res.status(201).json({ success: true, data: res.locals.trip });
+  return res
+    .status(201)
+    .json({ success: true, data: { tripId: res.locals.tripId } });
 });
 
 // GET /api/trips/:tripId - Retrieve a specific trip by ID

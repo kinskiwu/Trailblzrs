@@ -27,6 +27,10 @@ function App() {
                 element={<Trips />}
               />
               <Route
+                path='/trips/:tripId'
+                element={<Trips />}
+              />
+              <Route
                 path='*'
                 element={<NotFound />}
               />

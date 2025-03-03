@@ -85,6 +85,37 @@ body {
   margin-right: 5px;
 }
 
+/*Parks Page*/
+.parks-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Button styles */
+.create-trip-button {
+  align-self: flex-end;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #2e4d38;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-trip-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.create-trip-button:hover:not(:disabled) {
+  background-color: #3e6d48;
+}
+
 /* Parks List */
 .park-list {
   display: grid;
@@ -105,10 +136,6 @@ body {
   background: #ffffff;
 }
 
-.park-card.selected {
-  border: 2px solid orange;
-  margin: -1px;
-}
 .park-image {
   width: 100%;
   height: 200px;
@@ -196,6 +223,14 @@ body {
   background: #3a5d47;
 }
 
+.card-button.remove {
+  background: #8d5524;
+}
+
+.card-button.remove:hover {
+  background: #6f4220;
+}
+
 /* Action Controls */
 .control-container {
   display: flex;
@@ -204,6 +239,7 @@ body {
   padding: 12px 0;
   border-bottom: 1px solid #d3e0d5;
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .control-group {
@@ -246,6 +282,7 @@ body {
   align-items: center;
   margin: 20px 0;
   gap: 5px;
+  width: 100%;
 }
 
 .page-button {

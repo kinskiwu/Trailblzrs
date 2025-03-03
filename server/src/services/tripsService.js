@@ -7,36 +7,37 @@ export class TripsService {
   }
 
   /**
-   * Creates a new trip or retrieves an existing one
-   * @param {string} [tripId] - Optional trip ID; generates a new one if not provided
-   * @returns {Promise<{tripId: string, tripDetails: object[]}>} - Trip object
+   * Creates a new trip with trip details
+   * @param {Array} tripDetails - Array of trip details (each with date, park, and forecast)
+   * @param {string} [tripId=uuidv4()] - Optional trip ID
+   * @returns {Object} Created trip
    */
-  async createTrip(tripId = uuidv4()) {
+  async createTrip(tripDetails, tripId = uuidv4()) {
     try {
-      const newTrip = await this.tripModel.findOneAndUpdate(
+      const trip = await this.tripModel.findOneAndUpdate(
         { tripId },
-        { tripId, tripDetails: [] },
-        {
-          new: true, // Return new document
-          upsert: true, // Create document if doesn't exist
-        },
+        { tripId, tripDetails },
+        { new: true, upsert: true },
       );
 
-      return { tripId: newTrip.tripId, tripDetails: newTrip.tripDetails };
+      return { tripId: trip.tripId };
     } catch (err) {
       console.error('Failed to create trip:', err);
-      throw new Error('Failed to create trip');
+      throw new Error(`Failed to create trip: ${err.message}`);
     }
   }
 
   /**
-   * Retrieves a trip by its unique ID
-   * @param {string} tripId - The trip ID
-   * @returns {Promise<object|null>} - Trip object or `null` if not found
+   * Retrieves a trip by its ID
    */
   async getTripById(tripId) {
     try {
-      return await this.tripModel.findOne({ tripId }, 'tripId tripDetails');
+      const trip = await this.tripModel.findOne(
+        { tripId },
+        'tripId tripDetails',
+      );
+      console.log('Fetched trip:', trip); // Debug
+      return trip;
     } catch (err) {
       console.error('Failed to fetch trip:', err);
       throw new Error('Failed to fetch trip');

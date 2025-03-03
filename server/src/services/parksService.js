@@ -14,9 +14,10 @@ if (!API_KEY) {
 }
 
 export class ParksService {
-  constructor(apiClient = axios, apiKey = API_KEY) {
+  constructor(apiClient = axios, apiKey = API_KEY, parkModel = Park) {
     this.apiClient = apiClient;
     this.apiKey = apiKey;
+    this.parkModel = parkModel;
   }
 
   /**
@@ -64,7 +65,7 @@ export class ParksService {
 
       // Save parks to MongoDB if they are new
       for (const park of parks) {
-        await Park.findOneAndUpdate({ parkId: park.parkId }, park, {
+        await this.parkModel.findOneAndUpdate({ parkId: park.parkId }, park, {
           upsert: true,
           new: true,
         });
@@ -76,6 +77,20 @@ export class ParksService {
     } catch (error) {
       console.error('Failed to fetch parks:', error);
       throw new Error(`Failed to fetch parks: ${error.message}`);
+    }
+  }
+
+  /**
+   * Fetches multiple parks by their parkIds from the database
+   * @param {string[]} parkIds - Array of park IDs
+   * @returns {Promise<object[]>} - List of park objects
+   */
+  async getParksByIds(parkIds) {
+    try {
+      return await this.parkModel.find({ parkId: { $in: parkIds } });
+    } catch (error) {
+      console.error('Error fetching parks from database:', error);
+      throw new Error('Failed to fetch parks');
     }
   }
 }
