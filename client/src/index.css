@@ -248,6 +248,14 @@ body {
   gap: 12px;
 }
 
+.control-group select {
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #2e4d38;
+  text-align: center;
+}
+
 .filter-group span {
   color: #2e4d38;
   font-size: 14px;

@@ -25,17 +25,22 @@ const ParksProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [parkSelections, setParkSelections] = useState([]);
   const [visitDate, setVisitDate] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
 
   /**
    * Fetches a list of parks from the API.
    * @param {number} [page=1] - The page number to fetch.
    */
-  const fetchParks = async (page = 1) => {
+  const fetchParks = async (page = 1, state = selectedState) => {
     setParksLoading(true);
     setParksError(null);
 
     try {
-      const response = await axios.get(`/api/parks?page=${page}`);
+      let params = `page=${page}`;
+      if (state) {
+        params += `&state=${state}`;
+      }
+      const response = await axios.get(`/api/parks?${params}`);
       setParks(response.data.data.parks);
       setCurrentPage(page); // To reflect latest request
     } catch (err) {
@@ -48,7 +53,7 @@ const ParksProvider = ({ children }) => {
 
   useEffect(() => {
     fetchParks(currentPage);
-  }, [currentPage]); // Runs only when currentPage updates
+  }, [currentPage, selectedState]); // Re-fetch when page or state changes
 
   const addParkSelection = (parkId, visitDate) => {
     setParkSelections((prev) => {
@@ -74,6 +79,8 @@ const ParksProvider = ({ children }) => {
         removeParkSelection,
         visitDate,
         setVisitDate,
+        selectedState,
+        setSelectedState,
       }}
     >
       {children}
