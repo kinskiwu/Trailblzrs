@@ -10,6 +10,7 @@ export class TripsController {
     this.parksService = parksService;
     this.forecastService = forecastService;
     this.createTrip = this.createTrip.bind(this);
+    this.getTripById = this.getTripById.bind(this);
   }
 
   /**
@@ -90,8 +91,8 @@ export class TripsController {
       }
 
       // Create trip
-      const newTrip = await this.tripsService.createTrip(tripDetails);
-      res.locals.trip = newTrip;
+      const { tripId } = await this.tripsService.createTrip(tripDetails);
+      res.locals.tripId = tripId;
       next();
     } catch (err) {
       res.locals.error = serverError('Failed to create trip', err.message);

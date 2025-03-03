@@ -20,7 +20,7 @@ export class TripsService {
         { new: true, upsert: true },
       );
 
-      return { tripId: trip.tripId, tripDetails: trip.tripDetails };
+      return { tripId: trip.tripId };
     } catch (err) {
       console.error('Failed to create trip:', err);
       throw new Error(`Failed to create trip: ${err.message}`);
@@ -32,7 +32,12 @@ export class TripsService {
    */
   async getTripById(tripId) {
     try {
-      return await this.tripModel.findOne({ tripId }, 'tripId tripDetails');
+      const trip = await this.tripModel.findOne(
+        { tripId },
+        'tripId tripDetails',
+      );
+      console.log('Fetched trip:', trip); // Debug
+      return trip;
     } catch (err) {
       console.error('Failed to fetch trip:', err);
       throw new Error('Failed to fetch trip');

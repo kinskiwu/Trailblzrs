@@ -26,7 +26,9 @@ tripsRouter.post('/', tripsController.createTrip, (_, res) => {
       details: res.locals.error.details,
     });
   }
-  return res.status(201).json({ success: true, data: res.locals.trip });
+  return res
+    .status(201)
+    .json({ success: true, data: { tripId: res.locals.tripId } });
 });
 
 // GET /api/trips/:tripId - Retrieve a specific trip by ID
