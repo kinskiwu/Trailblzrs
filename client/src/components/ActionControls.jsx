@@ -81,7 +81,7 @@ const ActionControls = () => {
   return (
     <div className='control-container'>
       <div className='control-group'>
-        <span>Filter by State:</span>
+        <span>📍 By Location</span>
         <select
           value={selectedState || ''}
           onChange={handleStateChange}
@@ -117,7 +117,7 @@ const ActionControls = () => {
           onChange={handleSortChange}
         >
           <option value='name'>Name</option>
-          <option value='state'>State</option>
+          <option value='activities'>🛶 Most Activities</option>
         </select>
       </div>
     </div>

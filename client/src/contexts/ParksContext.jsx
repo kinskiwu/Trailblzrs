@@ -60,8 +60,11 @@ const ParksProvider = ({ children }) => {
   const sortedParks = [...parks].sort((a, b) => {
     if (sortBy === 'name') {
       return a.name.localeCompare(b.name);
-    } else if (sortBy === 'state') {
-      return a.state.localeCompare(b.state);
+    } else if (sortBy === 'activities') {
+      // Sort by number of activities, desc
+      const aActivities = a.activities?.length || 0;
+      const bActivities = b.activities?.length || 0;
+      return bActivities - aActivities;
     }
     return 0;
   });
