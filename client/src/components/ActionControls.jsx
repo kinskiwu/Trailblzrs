@@ -3,8 +3,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useParks } from '../contexts/ParksContext';
 
 const ActionControls = () => {
-  const { visitDate, setVisitDate, selectedState, setSelectedState } =
-    useParks();
+  const {
+    visitDate,
+    setVisitDate,
+    selectedState,
+    setSelectedState,
+    sortBy,
+    setSortBy,
+  } = useParks();
 
   const today = new Date();
   const maxDate = new Date();
@@ -68,6 +74,10 @@ const ActionControls = () => {
     setSelectedState(state);
   };
 
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
   return (
     <div className='control-container'>
       <div className='control-group'>
@@ -101,10 +111,14 @@ const ActionControls = () => {
       </div>
 
       <div className='control-group'>
-        <div className='dropdown'>
-          <span>Sort: Name</span>
-          <span className='dropdown-arrow'>▼</span>
-        </div>
+        <span>Sort by:</span>
+        <select
+          value={sortBy}
+          onChange={handleSortChange}
+        >
+          <option value='name'>Name</option>
+          <option value='state'>State</option>
+        </select>
       </div>
     </div>
   );
