@@ -26,6 +26,7 @@ const ParksProvider = ({ children }) => {
   const [parkSelections, setParkSelections] = useState([]);
   const [visitDate, setVisitDate] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
+  const [sortBy, setSortBy] = useState('name');
 
   /**
    * Fetches a list of parks from the API.
@@ -55,6 +56,19 @@ const ParksProvider = ({ children }) => {
     fetchParks(currentPage);
   }, [currentPage, selectedState]); // Re-fetch when page or state changes
 
+  // Sort parks based on sortBy
+  const sortedParks = [...parks].sort((a, b) => {
+    if (sortBy === 'name') {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === 'activities') {
+      // Sort by number of activities, desc
+      const aActivities = a.activities?.length || 0;
+      const bActivities = b.activities?.length || 0;
+      return bActivities - aActivities;
+    }
+    return 0;
+  });
+
   const addParkSelection = (parkId, visitDate) => {
     setParkSelections((prev) => {
       if (prev.some((p) => p.parkId === parkId)) return prev;
@@ -69,7 +83,7 @@ const ParksProvider = ({ children }) => {
   return (
     <ParksContext.Provider
       value={{
-        parks,
+        parks: sortedParks,
         currentPage,
         fetchParks,
         parksLoading,
@@ -81,6 +95,8 @@ const ParksProvider = ({ children }) => {
         setVisitDate,
         selectedState,
         setSelectedState,
+        sortBy,
+        setSortBy,
       }}
     >
       {children}

@@ -248,39 +248,21 @@ body {
   gap: 12px;
 }
 
-.control-group select {
-  font-size: 1rem;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #2e4d38;
-  text-align: center;
-}
-
-.filter-group span {
+.control-group span {
   color: #2e4d38;
   font-size: 14px;
 }
 
-.dropdown {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.control-group select,
+.control-group input {
   padding: 6px 12px;
-  border: 1px solid #a0c4a8;
+  border: 1px solid #b9ccbc;
   border-radius: 4px;
-  cursor: pointer;
   background-color: #f5f9f6;
+  color: #2e4d38;
   font-size: 14px;
-  transition: background 0.3s ease;
-}
-
-.dropdown:hover {
-  background-color: #e0efe2;
-}
-
-.dropdown-arrow {
-  font-size: 10px;
-  color: #5a7d5b;
+  width: 180px;
+  box-sizing: border-box;
 }
 
 /* Pagination */

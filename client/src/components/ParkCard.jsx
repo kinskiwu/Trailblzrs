@@ -56,12 +56,14 @@ const ParkCard = ({ park }) => {
         )}
         {renderInfoRow(
           'Activities',
-          park.activities?.length ? park.activities.join(', ') : null,
+          park.activities?.length
+            ? park.activities.slice(0, 5).join(', ')
+            : null,
         )}
         {renderInfoRow(
           'Historical Relevance',
           park.historicalRelevance?.length
-            ? park.historicalRelevance.join(', ')
+            ? park.historicalRelevance.slice(0, 5).join(', ')
             : null,
         )}
         {park.npsLink &&
