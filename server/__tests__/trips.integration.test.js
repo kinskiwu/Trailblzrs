@@ -8,6 +8,7 @@ let ParksService;
 let ForecastService;
 
 beforeAll(async () => {
+  // Import all required modules
   const routerModule = await import('../src/routes/tripsRouter.js');
   const tripsServiceModule = await import('../src/services/tripsService.js');
   const parksServiceModule = await import('../src/services/parksService.js');
@@ -32,6 +33,7 @@ describe('Trips API', () => {
   });
 
   test('POST /api/trips creates a new trip', async () => {
+    // Create 5 park selections (API requires minimum of 5)
     const parkSelections = Array(5)
       .fill()
       .map((_, i) => ({
@@ -39,6 +41,7 @@ describe('Trips API', () => {
         visitDate: '2025-04-15',
       }));
 
+    // Mock parks service to return data for all requested parks
     ParksService.prototype.getParksByIds = jest.fn().mockResolvedValue(
       parkSelections.map((selection) => ({
         parkId: selection.parkId,
@@ -50,6 +53,7 @@ describe('Trips API', () => {
       })),
     );
 
+    // Mock forecast service to return consistent weather data
     ForecastService.prototype.getForecastByParkId = jest
       .fn()
       .mockResolvedValue({
@@ -59,6 +63,7 @@ describe('Trips API', () => {
         windSpeed: '5 mph',
       });
 
+    // Mock trip creation to return a valid trip ID
     TripsService.prototype.createTrip = jest.fn().mockResolvedValue({
       tripId: 'test-trip-id',
       tripDetails: [],
@@ -73,6 +78,7 @@ describe('Trips API', () => {
   });
 
   test('POST /api/trips validates input', async () => {
+    // Send only 1 park (min requirement is 5)
     const response = await request(app)
       .post('/api/trips')
       .send({
@@ -84,6 +90,7 @@ describe('Trips API', () => {
   });
 
   test('GET /api/trips/:tripId returns a trip', async () => {
+    // Mock trip service to return a valid trip
     TripsService.prototype.getTripById = jest.fn().mockResolvedValue({
       tripId: 'test-trip-id',
       tripDetails: [],
@@ -96,6 +103,7 @@ describe('Trips API', () => {
   });
 
   test('GET /api/trips/:tripId returns 404 for missing trip', async () => {
+    // Mock trip service to return null (trip not found)
     TripsService.prototype.getTripById = jest.fn().mockResolvedValue(null);
 
     const response = await request(app).get('/api/trips/missing');

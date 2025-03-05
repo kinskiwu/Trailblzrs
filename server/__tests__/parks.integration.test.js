@@ -7,6 +7,7 @@ let parksRouter;
 let ParksService;
 
 beforeAll(async () => {
+  // Import router and service modules
   const routerModule = await import('../src/routes/parksRouter.js');
   const serviceModule = await import('../src/services/parksService.js');
 
@@ -22,10 +23,10 @@ describe('Parks API', () => {
   let axiosMock;
 
   beforeEach(() => {
-    // Setup router
+    // Mount parks router for each test
     app.use('/api/parks', parksRouter);
 
-    // Setup mocks
+    // Create mock axios instance and inject into service
     axiosMock = mockAxios();
     ParksService.prototype.apiClient = axiosMock;
 
@@ -33,7 +34,7 @@ describe('Parks API', () => {
   });
 
   test('GET /api/parks returns parks', async () => {
-    // Setup mock data
+    // Mock NPS API response structure with minimal required fields
     axiosMock.get.mockResolvedValue({
       data: {
         data: [
@@ -54,6 +55,7 @@ describe('Parks API', () => {
   });
 
   test('GET /api/parks handles API failure', async () => {
+    // Override entire getParks method to ensure error happens
     ParksService.prototype.getParks = jest
       .fn()
       .mockRejectedValue(new Error('API down'));

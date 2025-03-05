@@ -42,7 +42,10 @@ export default [
     files: ["server/**/*.js"],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.node,
+      globals: {
+        ...globals.node,
+        ...globals.jest 
+      },
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",

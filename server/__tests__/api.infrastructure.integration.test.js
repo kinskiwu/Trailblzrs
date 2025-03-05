@@ -9,13 +9,15 @@ app.use(express.json());
 
 describe('API Infrastructure', () => {
   beforeEach(() => {
-    // Setup routes for each test
+    // Setup health check endpoint
     app.get('/api/test', (_, res) => {
       res.json({ message: 'Welcome to Trailblzrs API!' });
     });
 
+    // Setup 404 handler endpoint
     app.use('/api/*', (req, res) => {
       const error = notFoundError('Endpoint');
+      // Include request method and path in error details
       error.details = `${req.method} ${req.originalUrl} is not a valid endpoint`;
 
       res.status(error.status).json({
@@ -45,6 +47,7 @@ describe('API Infrastructure', () => {
   });
 
   test('POST /api/nonexistent returns 404 with correct method', async () => {
+    // Test different HTTP verb to ensure method correctly included in error
     const response = await request(app).post('/api/nonexistent');
 
     expect(response.status).toBe(404);
