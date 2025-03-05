@@ -6,6 +6,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 
 export default [
   { ignores: ["node_modules", "dist", "build", ".cache"] },
+
   // For client
   {
     files: ["client/**/*.{js,jsx}"],
@@ -37,6 +38,29 @@ export default [
       ],
     },
   },
+
+  // Config for test files
+  {
+    files: [
+      "client/__tests__/**/*.{js,jsx}",
+      "client/__mocks__/**/*.{js,jsx}"
+    ],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+        ...globals.nodeBuiltin,
+        afterEach: "readonly",
+        beforeEach: "readonly",
+        describe: "readonly",
+        expect: "readonly",
+        jest: "readonly",
+        test: "readonly",
+        it: "readonly"
+      },
+    },
+  },
+
   // For server
   {
     files: ["server/**/*.js"],
@@ -44,7 +68,7 @@ export default [
       ecmaVersion: 2020,
       globals: {
         ...globals.node,
-        ...globals.jest 
+        ...globals.jest,
       },
       parserOptions: {
         ecmaVersion: "latest",
