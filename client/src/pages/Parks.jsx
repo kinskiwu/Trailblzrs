@@ -8,6 +8,7 @@ import { useParks } from '../contexts/ParksContext';
 const Parks = () => {
   const { parkSelections } = useParks();
   const [tripError, setTripError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateTrip = async () => {
@@ -16,6 +17,8 @@ const Parks = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const response = await axios.post('/api/trips', { parkSelections });
       const tripId = response.data.data.tripId;
@@ -23,6 +26,9 @@ const Parks = () => {
     } catch (err) {
       setTripError('Failed to create trip. Please try again.');
       console.error('Error creating trip:', err.message);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,10 +45,10 @@ const Parks = () => {
       <ParksList />
       <button
         onClick={handleCreateTrip}
-        disabled={parkSelections.length < 5}
-        className='create-trip-button'
+        disabled={parkSelections.length < 5 || isLoading}
+        className={`create-trip-button ${isLoading ? 'loading' : ''}`}
       >
-        Create Trip
+        {isLoading ? 'Packing your virtual backpack..' : 'Create Trip'}
       </button>
     </div>
   );
