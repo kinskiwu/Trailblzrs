@@ -49,7 +49,11 @@ const Trips = () => {
   const endDate = dates.length ? new Date(Math.max(...dates)) : null;
 
   if (!activeTrip) {
-    return <div className='error'>No trip ID provided. Please create a trip from the Parks page.</div>;
+    return (
+      <div className='error'>
+        No trip ID provided. Please create a trip from the Parks page.
+      </div>
+    );
   }
 
   if (error && !tripDetails.length) {
