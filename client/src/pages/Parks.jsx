@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
 import ActionControls from '../components/ActionControls';
 import ParksList from '../components/ParksList';
 import { useParks } from '../contexts/ParksContext';
+import { useTrips } from '../contexts/TripsContext';
 
 const Parks = () => {
-  const { parkSelections } = useParks();
+  const { parkSelections, removeParkSelection } = useParks();
+  const { createTrip, loading: isCreatingTrip, setCurrentTripId } = useTrips();
   const [tripError, setTripError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateTrip = async () => {
@@ -17,18 +17,20 @@ const Parks = () => {
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      const response = await axios.post('/api/trips', { parkSelections });
-      const tripId = response.data.data.tripId;
-      navigate(`/trips/${tripId}`); // navigate to Trips after successful trip creation
+      const tripId = await createTrip(parkSelections);
+      setCurrentTripId(tripId);
+
+      // Clear selections after successful trip creation
+      parkSelections.forEach((selection) => {
+        removeParkSelection(selection.parkId);
+      });
+
+      // Navigate to the trip page
+      navigate(`/trips/${tripId}`);
     } catch (err) {
       setTripError('Failed to create trip. Please try again.');
       console.error('Error creating trip:', err.message);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -45,10 +47,10 @@ const Parks = () => {
       <ParksList />
       <button
         onClick={handleCreateTrip}
-        disabled={parkSelections.length < 5 || isLoading}
-        className={`create-trip-button ${isLoading ? 'loading' : ''}`}
+        disabled={parkSelections.length < 5 || isCreatingTrip}
+        className={`create-trip-button ${isCreatingTrip ? 'loading' : ''}`}
       >
-        {isLoading ? 'Packing your virtual backpack..' : 'Create Trip'}
+        {isCreatingTrip ? 'Packing your virtual backpack..' : 'Create Trip'}
       </button>
     </div>
   );
