@@ -34,7 +34,7 @@ jest.mock('../src/contexts/ParksContext', () => {
   };
 });
 
-// Helper render function
+// Render Parks page with necessary providers
 const renderParksPage = () => {
   return render(
     <BrowserRouter>
@@ -58,22 +58,28 @@ describe('Parks Page Integration', () => {
   test('renders parks and handles selection successfully', async () => {
     renderParksPage();
 
+    // Wait for parks to load
     await waitFor(() => {
       expect(screen.getByText(/Explore Parks/i)).toBeInTheDocument();
     });
 
+    // Verify initial selected parks count
     const selectedCounter = screen.getByText((content) => {
       return content.includes('Selected Parks:') && content.includes('0/5');
     });
+
     expect(selectedCounter).toBeInTheDocument();
 
+    // Simulate adding a park to the itinerary
     const addButtons = screen.getAllByText(/Add to Itinerary/i);
     expect(addButtons.length).toBeGreaterThan(0);
 
+    // Click "Add to Itinerary"
     fireEvent.click(addButtons[0]);
 
     expect(mockAddParkSelection).toHaveBeenCalled();
 
+    // Update context to reflect selection
     const { useParks } = require('../src/contexts/ParksContext');
 
     useParks.mockImplementation(() => ({
@@ -100,12 +106,13 @@ describe('Parks Page Integration', () => {
 
     renderParksPage();
 
+    // Verify the selected parks count has updated
     expect(
       screen.getByText((content) => {
         return content.includes('Selected Parks:') && content.includes('1/5');
       }),
     ).toBeInTheDocument();
-
+    // Ensure "Remove from Itinerary" button is displayed
     expect(screen.getByText(/Remove from Itinerary/i)).toBeInTheDocument();
   });
 
@@ -129,17 +136,19 @@ describe('Parks Page Integration', () => {
       fetchParks: jest.fn(),
     }));
 
+    // Simulate network failure when fetching parks data
     axios.get.mockRejectedValueOnce(new Error('Network Error'));
 
     renderParksPage();
 
+    // Confirm error message is displayed
     await waitFor(() => {
       const errorElement = screen.getByText((content) => {
         return content.includes('Failed to load parks');
       });
       expect(errorElement).toBeInTheDocument();
     });
-
+    // Ensure "Add to Itinerary" is not present in error state
     expect(screen.queryByText(/Add to Itinerary/i)).not.toBeInTheDocument();
   });
 });

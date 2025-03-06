@@ -1,4 +1,5 @@
 export default {
+  // Mock GET request to return mock park data
   get: jest.fn(() =>
     Promise.resolve({
       data: {
@@ -8,5 +9,6 @@ export default {
       },
     }),
   ),
+  // Mock POST request to return an empty successful response
   post: jest.fn(() => Promise.resolve({ data: {} })),
 };
