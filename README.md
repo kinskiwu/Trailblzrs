@@ -107,17 +107,46 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 - **Wireframes**: [Click here](https://balsamiq.cloud/slveto6/plezzeg/r2278)
 - **API Design**: [Click here](docs/Trailblzrs-Api-Design.md)
 
-## 📈 Project Status
+## 🏁 Challenge Requirements Completion
 
-✅ **Completed**
-- **NPS API Integration**: Implemented full-stack functionality for parks data fetching capability with pagination.
-- **NWS API Integration**: Implemented full backend and partial frontend forecast data retrieval with park coordinates and visit date.
-- **Trip Management**: Completed backend functionalities, including Trip schema, API endpoints for trip creation and trip retrieval.
-- **UI Components**: Park cards, trip itinerary view, and date selection
+### ✅ Completed Requirements
 
-📋 **Future Features**
+1. **Select Parks**
+   - **By Location (State/Region)**: Implemented state filtering in both API and UI
+   - **Park Selection**: UI allows selecting at least 5 parks for a trip
 
-- **Trip Updates**: The PUT /api/trips/:tripId endpoint for updating a trip by adding or changing a park assignment is not implemented yet.
+2. **Weather Forecasts**
+   - **Temperature (High/Low)**: Implemented and displayed in the trip view
+   - **Weather Conditions**: Implemented as "weather" field in forecast data
+   - **Wind Speed**: Implemented and included in trip details
+
+3. **Basic Sorting**
+   - **By Name**: Parks can be sorted alphabetically
+   - **By State**: Parks can be sorted by state code
+
+4. **Trip Planning**
+   - **Date Selection**: Users can select visit dates for parks
+   - **7-Day View**: Trip details are organized by date
+   - **Minimum Selection**: Enforces selection of at least 5 parks
+
+5. **Basic Caching**
+   - Parks are stored in MongoDB after retrieval to minimize API calls
+
+6. **Testing**
+   - Backend integration tests for parks and trips routes
+   - Frontend integration tests for parks selection
+
+### 🔄 Partially Completed
+
+1. **Weather Data**
+   - Three of the four required weather data points are implemented (missing humidity)
+
+2. **Trip Updates**
+   - Trip data structure and models are in place
+   - Missing: The PUT /api/trips/:tripId backend endpoint for updating existing trips
+   - Missing: Frontend UI for modifying trips after they've been created
+
+### 📋 Future Features
 
 - **Park Filtering**: Add support for filtering parks by activities, historical relevance, or weather conditions.
 
