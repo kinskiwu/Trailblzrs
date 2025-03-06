@@ -14,18 +14,21 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 ```
 ├── client/
 │   ├── public/             # Static files
-│   └── src/
-│       ├── components/     # Reusable UI components
-│       ├── pages/          # Page components
-│       ├── contexts/       # Context providers
-│       └── mocks/          # Mock data
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── contexts/       # React Context providers
+│   │   ├── pages/          # Page components
+│   │   └── mocks/          # Mock data for testing
+│   └── __tests__/          # Frontend tests
 ├── server/
-│   └── src/
-│       ├── config/         # Configuration files
-│       ├── controllers/    # Route handlers
-│       ├── models/         # MongoDB schemas
-│       ├── routes/         # Routes
-│       └── services/       # Business logic
+│   ├── src/
+│   │   ├── config/         # Configuration files
+│   │   ├── controllers/    # Route handlers
+│   │   ├── models/         # MongoDB schemas
+│   │   ├── routes/         # API route definitions
+│   │   ├── services/       # Business logic
+│   │   └── utils/          # Utility functions
+│   └── __tests__/          # Backend tests
 ├── docs/                   # Documentation
 ├── .github/                # Automation scripts
 └── README.md
@@ -80,11 +83,11 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 
    Navigate to [`http://localhost:5173`](http://localhost:5173)
 
-## 🔌  API Endpoints
+## 🔌 API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/parks` | GET | Retrieve 6 parks at a time |
+| `/api/parks` | GET | Retrieve parks with pagination and filtering options |
 | `/api/forecast` | GET | Get weather forecast for a park on a specific date |
 | `/api/trips` | POST | Create a new trip |
 | `/api/trips/:tripId` | GET | Retrieve a trip by ID |
@@ -102,38 +105,77 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 ## 📄 Design Documentation
 
 - **Wireframes**: [Click here](https://balsamiq.cloud/slveto6/plezzeg/r2278)
-- **API Design**: [Click here](docs/Trailblzers-Api-Design.md)
+- **API Design**: [Click here](docs/Trailblzrs-Api-Design.md)
 
-## 📈 Project Status
+## 🏁 Challenge Requirements Completion
 
-✅ **Completed**
-- **NPS API Integration**: Implemented full-stack functionality for parks data fetching capability with pagination.
-- **NWS API Integration**: Implemented full backend and partial frontend forecast data retrieval with park coordinates and visit date. The frontend makes the requests and receives the data, but the state management and data integration are still work in progress.
-- **Trip Management**: Completed partial backend functionalities, including Trip schema, API endpoints for trip creation and trip retrieval.
+### ✅ Completed Requirements
 
-🔄 **In Progress**
-- **Caching**: Designed/Created Park and Forecast schemas.
+1. **Select Parks**
+   - **By Location (State/Region)**: Implemented state filtering in both API and UI
+   - **Park Selection**: UI allows selecting at least 5 parks for a trip
 
-📋 **Backlog**
-- **Trip Management**: Backend trip update endpoint, frontend integration with backend.
-- **Park Filtering**: By location, activities, historical relevance, and weather conditions.
-- **Park Sorting**: By activity count, weather conditions, proximity, and historical significance.
-- **Google Sheets Integration**: Export trip itineraries with itinerary details.
+2. **Weather Forecasts**
+   - **Temperature (High/Low)**: Implemented and displayed in the trip view
+   - **Weather Conditions**: Implemented as "weather" field in forecast data
+   - **Wind Speed**: Implemented and included in trip details
 
-🍫 **Stretch Goals**
-- The essential happy paths and edge cases such as parks and weather data fetching.
-- Implement validation to handle user inputs and API responses gracefully.
-- Authentication.
-- Automation for scheduling data fetching after TTL expirations, event-driven Google Sheets updates when parks have alerts or extreme weather conditions.
-- Integrate Google Maps to provide visual trip planning and route optimization.
-- Add additional information travelers need, such as park alerts, parking availability, camping options, and entry fees.
+3. **Basic Sorting**
+   - **By Name**: Parks can be sorted alphabetically
+   - **By State**: Parks can be sorted by state code
 
-📝 **Additional Notes**
-I've created simple tickets to plan out the project and smaller PRs to record my progress. Since it's a solo project with time constraints, in a real-world scenario I would have:
-- Asked clarifying questions before design.
-- Created more thorough EPICs and user stories with detailed tickets.
-- Included more details in PRs.
+4. **Trip Planning**
+   - **Date Selection**: Users can select visit dates for parks
+   - **7-Day View**: Trip details are organized by date
+   - **Minimum Selection**: Enforces selection of at least 5 parks
 
-Overall, I really enjoyed this process (I love hiking 🥾) and learned a lot from it! Thanks for this invitation!
+5. **Basic Caching**
+   - Parks are stored in MongoDB after retrieval to minimize API calls
 
-💪 **Enhanced Features**
+6. **Testing**
+   - Backend integration tests for parks and trips routes
+   - Frontend integration tests for parks selection
+
+### 🔄 Partially Completed
+
+1. **Weather Data**
+   - Three of the four required weather data points are implemented (missing humidity)
+
+2. **Trip Updates**
+   - Trip data structure and models are in place
+   - Missing: The PUT /api/trips/:tripId backend endpoint for updating existing trips
+   - Missing: Frontend UI for modifying trips after they've been created
+
+### 📋 Future Features
+
+- **Park Filtering**: Add support for filtering parks by activities, historical relevance, or weather conditions.
+
+- **Park Sorting**: Implement advanced sorting options for parks by weather conditions, proximity to user location, or historical relevance.
+
+- **Enhanced Weather Data**: Add humidity data to the weather forecast retrieval.
+
+- **Improved Caching Strategy**: Implement caching system for external API responses to improve performance and reduce external API calls.
+
+- **Google Maps Integration**: Add integration with Google Maps API.
+
+- **Advanced Weather Customization**: Implement additional weather data options and customization features for trip planning.
+
+- **Google Sheets Integration**: Add functionality to export trip data to Google Sheets, including an API endpoint and service for generating the required spreadsheet format.
+
+- **Automated Data Pipeline**: Set up GitHub Actions to automate regular data retrieval from external APIs and update spreadsheets/databases with the latest information.
+
+- **Unit Testing**: Implement unit tests for key services, controllers, and utility functions.
+
+- **End-to-End Testing**: Implement E2E testing to verify complete API workflows and integration with external services.
+
+- **Security Measures**: Add security enhancements including Helmet.js, and API authentication.
+
+- **Request Validation**: Add comprehensive input validation using a library like Joi or express-validator.
+
+- **Rate Limiting**: Implement rate limiting to protect the API from abuse and ensure fair usage.
+
+- **Enhanced CORS Configuration**: Set up more robust CORS options with specific origin controls.
+
+- **Centralized Error Handling**: Implement a global error handler middleware to process all errors consistently across the application.
+
+- **Logging**: Implement structured logging for better debugging and monitoring capabilities.
