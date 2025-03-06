@@ -36,7 +36,7 @@ jobs:
         run: npm ci
 
       - name: Run integration tests
-        run: npm test -- --testMatch="**/*.integration.?(js|jsx)"
+        run: npm test -- --testMatch="**/__tests__/**/*.integration.?(js|jsx)"
 
   # Server-side
   server-integration:
@@ -46,7 +46,7 @@ jobs:
     defaults:
       run:
         working-directory: ./server
-        
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -62,4 +62,5 @@ jobs:
         run: npm ci
 
       - name: Run integration tests
-        run: npm test -- --testMatch="**/*.integration.?(js)"
+        run: npm test -- --testMatch="**/__tests__/**/*.integration.?(js)"
+        
