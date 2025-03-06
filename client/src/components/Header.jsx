@@ -5,10 +5,8 @@ const Header = () => {
     <header className='header'>
       <nav className='main-nav'>
         <div className='logo-container'>
-          <div className='logo'>
-            <span className='logo-icon'>🏔️</span>
-          </div>
-          <h1 className='site-title'>Trailblzrs</h1>
+          <span className='logo-icon'>🏔️</span>
+          <h1 className='logo-title'>Trailblzrs</h1>
         </div>
 
         <div className='nav-links'>
@@ -16,13 +14,15 @@ const Header = () => {
             to='/parks'
             className='nav-link'
           >
-            <span className='nav-icon'>🔍</span> Discover Parks
+            <span className='nav-icon'>🔍</span>
+            <span className='nav-link-text'>Discover Parks</span>
           </Link>
           <Link
             to='/trips'
             className='nav-link'
           >
-            <span className='nav-icon'>📋</span> Itinerary
+            <span className='nav-icon'>📋</span>
+            <span className='nav-link-text'>Itinerary</span>
           </Link>
         </div>
       </nav>
