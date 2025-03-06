@@ -4,7 +4,7 @@ import axios from 'axios';
 /**
  * Context for managing parks data and user selections.
  */
-const ParksContext = createContext();
+export const ParksContext = createContext();
 
 /**
  * Hook to access parks data and actions.
