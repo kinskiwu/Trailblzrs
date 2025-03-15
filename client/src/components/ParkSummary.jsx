@@ -1,14 +1,9 @@
-import React from 'react';
-import { useParks } from '../contexts/ParksContext';
-
-const ParkSummary = ({ park, index }) => {
-  const { forecast } = useParks();
-
+const ParkSummary = ({ park, forecast, index }) => {
   return (
     <div className='park-summary'>
-      #{index + 1} {park.name} <span className='summary-separator'>|</span>
+      #{index + 1} {park.parkName} <span className='summary-separator'>|</span>
       {park.state} <span className='summary-separator'>|</span>
-      Weather: {forecast?.weather || 'Loading...'}{' '}
+      Weather: {forecast?.weather || 'N/A'}{' '}
       <span className='summary-separator'>|</span>
       High: {forecast?.high || 'N/A'}{' '}
       <span className='summary-separator'>|</span>

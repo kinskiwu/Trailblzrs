@@ -1,14 +1,13 @@
-import React from 'react';
 import ParkCard from './ParkCard';
 import Pagination from './Pagination';
 import { useParks } from '../contexts/ParksContext';
 
 const ParksList = () => {
-  const { parks, isLoading, error } = useParks();
+  const { parks, parksLoading, parksError } = useParks();
 
-  if (error) return <div className='error'>{error}</div>;
+  if (parksError) return <div className='error'>{parksError}</div>;
 
-  return isLoading ? (
+  return parksLoading ? (
     <div className='loader'>Loading...</div>
   ) : (
     <>

@@ -2,11 +2,14 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 /**
+ * Context for managing parks data and user selections.
+ */
+export const ParksContext = createContext();
+
+/**
  * Hook to access parks data and actions.
  * @returns {object} Parks context value.
  */
-const ParksContext = createContext();
-
 export const useParks = () => useContext(ParksContext);
 
 /**
@@ -17,72 +20,83 @@ export const useParks = () => useContext(ParksContext);
  */
 const ParksProvider = ({ children }) => {
   const [parks, setParks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [parksLoading, setParksLoading] = useState(true);
+  const [parksError, setParksError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPark, setSelectedPark] = useState(null);
-  const [forecast, setForecast] = useState(null);
+  const [parkSelections, setParkSelections] = useState([]);
   const [visitDate, setVisitDate] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [sortBy, setSortBy] = useState('name');
 
   /**
-   * Fetches parks data for the given page.
-   * @param {number} [page=1] - Page number.
+   * Fetches a list of parks from the API.
+   * @param {number} [page=1] - The page number to fetch.
    */
-  const fetchParks = async (page = 1) => {
-    setIsLoading(true);
-    setError(null);
+  const fetchParks = async (page = 1, state = selectedState) => {
+    setParksLoading(true);
+    setParksError(null);
 
     try {
-      const response = await axios.get(`/api/parks?page=${page}`);
+      let params = `page=${page}`;
+      if (state) {
+        params += `&state=${state}`;
+      }
+      const response = await axios.get(`/api/parks?${params}`);
       setParks(response.data.data.parks);
       setCurrentPage(page); // To reflect latest request
     } catch (err) {
       console.error('Error fetching parks:', err.message);
-      setError('Failed to load parks. Please try again.');
+      setParksError('Failed to load parks. Please try again.');
     } finally {
-      setIsLoading(false);
+      setParksLoading(false);
     }
   };
 
   useEffect(() => {
     fetchParks(currentPage);
-  }, [currentPage]); // Runs only when currentPage updates
+  }, [currentPage, selectedState]); // Re-fetch when page or state changes
 
-  // Fetch forecast when a park is selected
-  useEffect(() => {
-    const fetchForecast = async (parkId, visitDate) => {
-      if (!parkId || !visitDate) return;
-
-      try {
-        const response = await axios.get(
-          `http://localhost:5001/api/forecast/?parkId=${parkId}&visitDate=${visitDate}`,
-        );
-
-        console.log('Forecast data:', response.data.data);
-        setForecast(response.data.data);
-      } catch (err) {
-        console.error('Error fetching forecast:', err.message);
-      }
-    };
-
-    if (selectedPark && visitDate) {
-      fetchForecast(selectedPark.parkId, visitDate);
+  // Sort parks based on sortBy
+  const sortedParks = [...parks].sort((a, b) => {
+    if (sortBy === 'name') {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === 'activities') {
+      // Sort by number of activities, desc
+      const aActivities = a.activities?.length || 0;
+      const bActivities = b.activities?.length || 0;
+      return bActivities - aActivities;
     }
-  }, [selectedPark, visitDate]);
+    return 0;
+  });
+
+  const addParkSelection = (parkId, visitDate) => {
+    setParkSelections((prev) => {
+      if (prev.some((p) => p.parkId === parkId)) return prev;
+      return [...prev, { parkId, visitDate }];
+    });
+  };
+
+  const removeParkSelection = (parkId) => {
+    setParkSelections((prev) => prev.filter((p) => p.parkId !== parkId));
+  };
 
   return (
     <ParksContext.Provider
       value={{
-        parks,
+        parks: sortedParks,
         currentPage,
         fetchParks,
-        selectedPark,
-        setSelectedPark,
-        forecast,
+        parksLoading,
+        parksError,
+        parkSelections,
+        addParkSelection,
+        removeParkSelection,
         visitDate,
         setVisitDate,
-        isLoading,
-        error,
+        selectedState,
+        setSelectedState,
+        sortBy,
+        setSortBy,
       }}
     >
       {children}

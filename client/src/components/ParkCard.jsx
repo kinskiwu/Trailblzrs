@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParks } from '../contexts/ParksContext';
 
 const ParkCard = ({ park }) => {
   const [isDescExpanded, setIsDescExpanded] = useState(false);
-  const { selectedPark, setSelectedPark, visitDate } = useParks();
+  const { parkSelections, addParkSelection, removeParkSelection, visitDate } =
+    useParks();
+
+  const isSelected = parkSelections.some((p) => p.parkId === park.parkId);
 
   const handleSelect = () => {
-    if (visitDate) {
-      setSelectedPark(park);
+    if (!visitDate) {
+      console.log('No visit date selected');
+      return;
+    }
+    if (isSelected) {
+      removeParkSelection(park.parkId);
+    } else {
+      addParkSelection(park.parkId, visitDate);
     }
   };
 
@@ -22,9 +31,8 @@ const ParkCard = ({ park }) => {
   };
 
   return (
-    <div
-      className={`park-card ${selectedPark?.parkId === park.parkId ? 'selected' : ''}`}
-    >
+    <div className={`park-card ${isSelected ? 'selected' : ''}`}>
+      {/* Park Image */}
       <div className='park-image'>
         <img
           src={park.image || 'https://loremflickr.com/1280/720'}
@@ -32,6 +40,7 @@ const ParkCard = ({ park }) => {
           className='actual-image'
         />
       </div>
+      {/* Park Information */}
       <div className='park-info'>
         <h3 className='park-title'>{park.name}</h3>
         <p
@@ -47,22 +56,26 @@ const ParkCard = ({ park }) => {
         )}
         {renderInfoRow(
           'Activities',
-          park.activities?.length ? park.activities.join(', ') : null,
+          park.activities?.length
+            ? park.activities.slice(0, 5).join(', ')
+            : null,
         )}
         {renderInfoRow(
           'Historical Relevance',
           park.historicalRelevance?.length
-            ? park.historicalRelevance.join(', ')
+            ? park.historicalRelevance.slice(0, 5).join(', ')
             : null,
         )}
         {park.npsLink &&
           renderInfoRow('NPS Link', <a href={park.npsLink}>{park.npsLink}</a>)}
+        {/* Add to Itinerary Button */}
         <button
-          className='card-button'
+          className={`card-button ${isSelected ? 'remove' : ''}`}
           onClick={handleSelect}
           disabled={!visitDate}
         >
-          <span className='itinerary-icon'>✓</span> Add to itinerary
+          <span className='itinerary-icon'>{isSelected ? '✗' : '✓'}</span>
+          {isSelected ? 'Remove from Itinerary' : 'Add to Itinerary'}
         </button>
       </div>
     </div>
