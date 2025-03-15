@@ -46,8 +46,8 @@ Trailblzrs is a web application that helps users plan their road trips to US Nat
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/simplifi-challenge/corporate-systems-engineer-api-data-retrieval-Jiaxin-Wu.git
-   cd corporate-systems-engineer-api-data-retrieval-Jiaxin-Wu
+   git clone https://github.com/kinskiwu/Trailblzrs.git
+   cd Trailblzrs
    ```
 
 2. **Install dependencies**
