@@ -1,50 +1,48 @@
 # Node.js dependencies
-node_modules/
-**/node_modules/
+node_modules
+/node_modules
+/client/node_modules
+/server/node_modules
 
 # Build output
-dist/
-build/
-out/
+/dist
+/build
+/client/build
+/client/dist
+/server/dist
 
 # Environment variables
 .env
+.env.local
 
-# Vite cache
-.vite/
-apps/client/.vite/
+# Vite specific (React frontend)
+.vite
+/client/.vite
 
 # Cache files
-.cache/
-client/.cache/
-server/.cache/
-
-# ESLint & Prettier cache
+.cache
+/client/.cache
 .eslintcache
-.prettierignore
+.npm
 
-# Jest & Testing
-coverage/
-server/coverage/
-client/coverage/
+# Logs
+npm-debug.log
+yarn-error.log
+error.log
+
+# Testing
+/coverage
+/client/coverage
+/server/coverage
 
 # MongoDB
-data/db/
-dump/
+/data/db
+/dump
 
-# GitHub Actions cache
-.github/workflows/node_modules/
-
-# macOS & Windows system files
+# OS specific files
 .DS_Store
 Thumbs.db
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+# Editor directories
+.vscode
 .idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
